@@ -33,7 +33,6 @@ class SignupActivity : AppCompatActivity() {
 
     private var btnSignIn: Button? = null
     private var btnSignUp: Button? = null
-    private var btnResetPassword: Button? = null
     private var progressBar: ProgressDialog? = null
 
     private var auth: FirebaseAuth? = null
@@ -53,6 +52,11 @@ class SignupActivity : AppCompatActivity() {
         mDatabase = FirebaseDatabase.getInstance()
         mDatabaseReference = mDatabase!!.reference!!.child("Users")
         auth = FirebaseAuth.getInstance()
+
+        btnSignIn!!.setOnClickListener{
+             startActivity(Intent(this@SignupActivity,
+                    LoginActivity::class.java))
+        }
 
         btnSignUp!!.setOnClickListener{ createNewAccount() }
     }
