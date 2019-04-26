@@ -3,6 +3,7 @@ package com.smart_home.smart_home
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.ToggleButton
 import android.widget.Toast
 import com.google.firebase.database.FirebaseDatabase
@@ -28,11 +29,11 @@ class Room1 : AppCompatActivity() {
     }
 
     private fun controlTemperature(){
-        val temp1ET = findViewById<EditText>(R.id.temperature1ET)
+        val temp1ET = findViewById<TextView>(R.id.readTemperature1TV)
         temperature.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                //val value = dataSnapshot.getValue(Int::class.java)
-                //temp1ET.setText(value!!)
+                val value = dataSnapshot.getValue(Long::class.java)
+                temp1ET.setText(value!!.toString())
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -45,8 +46,8 @@ class Room1 : AppCompatActivity() {
         val AC1TB = findViewById<ToggleButton>(R.id.AC1TB)
         AC1TB?.setOnCheckedChangeListener { buttonView, isChecked ->
             if(isChecked)
-                curtains.setValue("ON")
-            else curtains.setValue("OFF")
+                AC.setValue("ON")
+            else AC.setValue("OFF")
         }
         AC.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
