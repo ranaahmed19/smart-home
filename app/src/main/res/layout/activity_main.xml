@@ -5,15 +5,69 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MainActivity">
+        tools:context=".MainActivity" android:background="#FAFAFA">
 
     <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Hello World!"
+            android:layout_width="269dp"
+            android:layout_height="69dp"
+            android:text="Home"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            android:textSize="50sp"
+            android:textStyle="bold" android:gravity="center"
+            app:layout_constraintVertical_bias="0.182" android:id="@+id/mainTV" android:textColor="#0B4C9C"/>
+    <Button
+            android:text="Room 1"
+            android:layout_width="143dp"
+            android:layout_height="108dp"
+            android:id="@+id/room1BT"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toStartOf="@+id/room2BT"
+            android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp" android:layout_marginTop="60dp"
+            app:layout_constraintTop_toBottomOf="@+id/mainTV" app:layout_constraintHorizontal_bias="0.384"
+            android:visibility="visible" style="@style/Widget.AppCompat.Button.Borderless"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1" android:background="#8FB3D1"
+    />
+    <Button
+            android:text="Room 2"
+            android:layout_width="143dp"
+            android:layout_height="108dp"
+            android:id="@+id/room2BT"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="44dp" android:layout_marginRight="44dp" android:layout_marginTop="60dp"
+            app:layout_constraintTop_toBottomOf="@+id/mainTV" style="@style/Widget.AppCompat.Button.Colored"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1" android:textColorLink="#1775C0"
+            android:background="#8FB3D1"/>
+    <Button
+            android:text="Room 3"
+            android:layout_width="143dp"
+            android:layout_height="108dp"
+            android:id="@+id/room3BT"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toStartOf="@+id/kitchenBT"
+            android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/room1BT" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintHorizontal_bias="0.384"
+            app:layout_constraintVertical_bias="0.18" style="@style/Widget.AppCompat.Button.Borderless"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1" android:background="#8FB3D1"/>
+    <Button
+            android:text="Kitchen"
+            android:layout_width="143dp"
+            android:layout_height="108dp"
+            android:id="@+id/kitchenBT"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="44dp" android:layout_marginRight="44dp" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/room2BT" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintVertical_bias="0.18"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1" android:background="#8FB3D1"/>
 
 </android.support.constraint.ConstraintLayout>

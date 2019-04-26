@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">smart-home</string>
+    <string name="title_activity_room2">Room2</string>
+    <string name="title_activity_room3">Room3</string>
 </resources>

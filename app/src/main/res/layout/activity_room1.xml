@@ -7,36 +7,92 @@
         android:layout_height="match_parent"
         tools:context=".Room1" android:id="@+id/light1RB">
     <ToggleButton
-            android:layout_width="145dp"
-            android:layout_height="106dp"
+            android:layout_width="150dp"
+            android:layout_height="99dp"
             android:id="@+id/light1TB"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/textView3" app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
-            app:layout_constraintStart_toEndOf="@+id/light1TV"
-            app:layout_constraintVertical_bias="0.189" app:layout_constraintHorizontal_bias="0.387"/>
+            android:layout_marginTop="112dp"
+            app:layout_constraintTop_toBottomOf="@+id/room1TV"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="28dp"
+            android:layout_marginStart="28dp"/>
     <TextView
             android:text="Light"
-            android:layout_width="128dp"
-            android:layout_height="108dp"
+            android:layout_width="150dp"
+            android:layout_height="38dp"
             android:id="@+id/light1TV"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:textSize="30sp"
-            android:textStyle="bold" android:gravity="fill_vertical"
-            android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/textView3"
-            app:layout_constraintVertical_bias="0.186"
-            app:layout_constraintStart_toStartOf="parent"/>
+            android:textSize="15sp"
+            android:textStyle="bold" android:gravity="center|fill_vertical"
+            android:layout_marginStart="28dp"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="28dp"
+            android:layout_marginTop="16dp" app:layout_constraintTop_toBottomOf="@+id/light1TB"/>
     <TextView
             android:text="Room 1"
             android:layout_width="0dp"
             android:layout_height="102dp"
-            android:id="@+id/textView3" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+            android:id="@+id/room1TV" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
             app:layout_constraintHorizontal_bias="0.0" android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent" android:layout_marginTop="8dp"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintVertical_bias="0.013"
             android:textStyle="bold" android:textSize="40sp" android:gravity="fill_vertical"/>
+    <ToggleButton
+            android:text="ToggleButton"
+            android:layout_width="150dp"
+            android:layout_height="99dp"
+            android:id="@+id/curtains1TB" android:layout_marginTop="112dp"
+            app:layout_constraintTop_toBottomOf="@+id/room1TV" app:layout_constraintStart_toEndOf="@+id/light1TB"
+            android:layout_marginLeft="40dp" android:layout_marginStart="40dp" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp" android:layout_marginRight="8dp" app:layout_constraintHorizontal_bias="0.0"
+            android:textOff="Closed" android:textOn="Opened"/>
+    <ToggleButton
+            android:text="ToggleButton"
+            android:layout_width="150dp"
+            android:layout_height="99dp"
+            android:id="@+id/AC1TB" android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toTopOf="@+id/AC1TV"
+            android:layout_marginStart="28dp" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginLeft="28dp" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/light1TV" app:layout_constraintVertical_bias="1.0"/>
+    <TextView
+            android:text="Curtains"
+            android:layout_width="150dp"
+            android:layout_height="38dp"
+            android:textSize="15sp"
+            android:textStyle="bold" android:gravity="center|fill_vertical"
+            android:id="@+id/curtains1TV" android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/curtains1TB" app:layout_constraintStart_toEndOf="@+id/light1TV"
+            android:layout_marginLeft="40dp" android:layout_marginStart="40dp" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp" android:layout_marginRight="8dp" app:layout_constraintHorizontal_bias="0.0"/>
+    <TextView
+            android:text="AC"
+            android:layout_width="150dp"
+            android:layout_height="38dp"
+            android:textSize="15sp"
+            android:textStyle="bold" android:gravity="center|fill_vertical"
+            android:id="@+id/AC1TV" android:layout_marginBottom="120dp"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginLeft="28dp" android:layout_marginStart="28dp"/>
+    <TextView
+            android:text="Temperature"
+            android:layout_width="150dp"
+            android:layout_height="38dp"
+            android:textSize="15sp"
+            android:textStyle="bold" android:gravity="center|fill_vertical"
+            android:id="@+id/temperature1TV" android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/temperature1ET" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintVertical_bias="0.058"
+            app:layout_constraintStart_toEndOf="@+id/AC1TV" android:layout_marginStart="44dp"
+            android:layout_marginLeft="44dp" android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginRight="8dp" app:layout_constraintHorizontal_bias="0.0"/>
+    <EditText
+            android:layout_width="150dp"
+            android:layout_height="99dp"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/temperature1ET" android:layout_marginTop="68dp"
+            app:layout_constraintTop_toBottomOf="@+id/curtains1TV" app:layout_constraintStart_toEndOf="@+id/AC1TB"
+            android:layout_marginStart="40dp" android:layout_marginLeft="40dp" android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginRight="8dp"
+            app:layout_constraintHorizontal_bias="0.0" style="@style/Widget.AppCompat.AutoCompleteTextView"
+            android:text="32" android:gravity="center" android:textSize="30sp" android:textStyle="bold"/>
 </android.support.constraint.ConstraintLayout>
