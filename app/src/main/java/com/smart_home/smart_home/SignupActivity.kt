@@ -44,10 +44,12 @@ class SignupActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup)
 
-        btnSignIn =  findViewById<View>(R.id.sign_in_button) as Button
-        btnSignUp =  findViewById<View>(R.id.sign_up_button) as Button
+        inputFirstName = findViewById<View>(R.id.first_name) as EditText
+        inputLastName = findViewById<View>(R.id.last_name) as EditText
         inputEmail =  findViewById<View>(R.id.email) as EditText
         inputPassword =  findViewById<View>(R.id.password) as EditText
+        btnSignIn =  findViewById<View>(R.id.sign_in_button) as Button
+        btnSignUp =  findViewById<View>(R.id.sign_up_button) as Button
         progressBar =  ProgressDialog(this)
         mDatabase = FirebaseDatabase.getInstance()
         mDatabaseReference = mDatabase!!.reference!!.child("Users")
