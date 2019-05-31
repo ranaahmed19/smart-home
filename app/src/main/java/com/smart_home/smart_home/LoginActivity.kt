@@ -33,6 +33,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+
         ForgotPassword = findViewById<View>(R.id.btn_reset_password)as TextView
         inputEmail = findViewById<View>(R.id.email) as EditText
         inputPassword = findViewById<View>(R.id.password) as EditText
@@ -41,6 +42,12 @@ class LoginActivity : AppCompatActivity() {
         progressBar = ProgressDialog(this)
 
         auth = FirebaseAuth.getInstance()
+        val user = auth!!.currentUser
+        if (user != null) {
+            Toast.makeText(this@LoginActivity, "user already signed in."+user.email, Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent);
+        }
 
         ForgotPassword!!
             .setOnClickListener {
