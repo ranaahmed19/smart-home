@@ -16,6 +16,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         var room1Button = findViewById<Button>(R.id.room1BT) as Button
         var room2Button = findViewById<Button>(R.id.room2BT) as Button
+        var room3Button = findViewById<Button>(R.id.room3BT) as Button
         val user = FirebaseAuth.getInstance().currentUser
         Toast.makeText(this@MainActivity, "You clicked me."+user!!.email, Toast.LENGTH_LONG).show()
         room1Button.setOnClickListener {
@@ -28,6 +29,12 @@ class MainActivity : AppCompatActivity() {
             FirebaseAuth.getInstance().signOut()
             Toast.makeText(this@MainActivity, "You clicked me.", Toast.LENGTH_SHORT).show()
             val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent);
+        }
+
+        room3Button.setOnClickListener {
+            Toast.makeText(this@MainActivity, "You clicked me.", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, MapsActivity::class.java)
             startActivity(intent);
         }
     }
