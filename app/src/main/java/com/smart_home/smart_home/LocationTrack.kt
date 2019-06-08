@@ -51,6 +51,7 @@ class LocationTrack(private val mContext: Context) : Service(), LocationListener
 
             try {
                 locationManager = mContext.getSystemService(LOCATION_SERVICE) as LocationManager
+
                 checkGPS = locationManager!!
                     .isProviderEnabled(LocationManager.GPS_PROVIDER)
                 checkNetwork = locationManager!!
@@ -172,7 +173,16 @@ class LocationTrack(private val mContext: Context) : Service(), LocationListener
     }
 
     override fun onLocationChanged(location: Location) {
+        if (location != null) {
+            val lat = location!!.latitude
+            val lng = location!!.longitude
+            if (lat != 0.0 && lng != 0.0) {
+                System.out.println("WE GOT THE LOCATION")
+                System.out.println(lat)
+                System.out.println(lng)
+            }
 
+        }
     }
 
     override fun onStatusChanged(s: String, i: Int, bundle: Bundle) {
@@ -193,7 +203,7 @@ class LocationTrack(private val mContext: Context) : Service(), LocationListener
         private val MIN_DISTANCE_CHANGE_FOR_UPDATES: Long = 10
 
 
-        private val MIN_TIME_BW_UPDATES = (1000 * 60 * 1).toLong()
+        private val MIN_TIME_BW_UPDATES = (10000 * 60 * 1).toLong()
     }
 }
 

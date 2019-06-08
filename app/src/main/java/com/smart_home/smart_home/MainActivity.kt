@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
 
         room3Button.setOnClickListener {
             Toast.makeText(this@MainActivity, "You clicked me.", Toast.LENGTH_SHORT).show()
-            val intent = Intent(this, MapsActivity::class.java)
+            val intent = Intent(this, Map2Activity::class.java)
             startActivity(intent);
         }
     }

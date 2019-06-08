@@ -41,20 +41,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         permissions.add(ACCESS_FINE_LOCATION)
         permissions.add(ACCESS_COARSE_LOCATION)
 
-        permissionsToRequest = findUnAskedPermissions(permissions)
-        //get the permissions we have asked for before but are not granted..
-        //we will store this in a global list to access later.
 
 
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-
-
-            if (permissionsToRequest!!.size > 0) {
-                val array = arrayOfNulls<String>(permissionsToRequest!!.size)
-                requestPermissions(permissionsToRequest!!.toArray(array), ALL_PERMISSIONS_RESULT)
-            }
-        }
 
     }
 
@@ -149,31 +137,47 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         // Add a marker in Sydney and move the camera
         val sydney = LatLng(-34.0, 151.0)
-        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        //mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
+        //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        permissionsToRequest = findUnAskedPermissions(permissions)
+        //get the permissions we have asked for before but are not granted..
+        //we will store this in a global list to access later.
 
+        mMap.isMyLocationEnabled = true
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+
+
+            if (permissionsToRequest!!.size > 0) {
+                val array = arrayOfNulls<String>(permissionsToRequest!!.size)
+                requestPermissions(permissionsToRequest!!.toArray(array), ALL_PERMISSIONS_RESULT)
+            }
+        }
         locationTrack = LocationTrack(this@MapsActivity)
 
-        if (locationTrack!!.canGetLocation()) {
+        for (i in 1..4) {
+            if (locationTrack!!.canGetLocation()) {
 
 
-            val longitude = locationTrack!!.getLongitude()
-            val latitude = locationTrack!!.getLatitude()
+                val longitude = locationTrack!!.getLongitude()
+                val latitude = locationTrack!!.getLatitude()
 
-            Toast.makeText(
-                applicationContext,
-                "Longitude:" + java.lang.Double.toString(longitude) + "\nLatitude:" + java.lang.Double.toString(
-                    latitude
-                ),
-                Toast.LENGTH_SHORT
-            ).show()
-            val Here = LatLng(latitude,longitude)
-            mMap.addMarker(MarkerOptions().position(Here).title("Marker in Here"))
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(Here))
+                Toast.makeText(
+                    applicationContext,
+                    "Longitude:" + java.lang.Double.toString(longitude) + "\nLatitude:" + java.lang.Double.toString(
+                        latitude
+                    ),
+                    Toast.LENGTH_SHORT
+                ).show()
+                val Here = LatLng(latitude,longitude)
+                mMap.addMarker(MarkerOptions().position(Here).title("Marker in Here"))
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(Here))
 
-        } else {
 
-            locationTrack!!.showSettingsAlert()
+            } else {
+
+                locationTrack!!.showSettingsAlert()
+            }
         }
     }
 }
