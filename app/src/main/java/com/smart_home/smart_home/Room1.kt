@@ -22,6 +22,8 @@ class Room1 : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_room1)
+        if (supportActionBar != null)
+            supportActionBar?.hide()
         controlLight()
         controlCurtains()
         controlAC()
