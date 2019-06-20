@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.view.View
+import android.widget.FrameLayout
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 
@@ -14,8 +15,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        var room1Button = findViewById<Button>(R.id.room1BT) as Button
-        var room2Button = findViewById<Button>(R.id.room2BT) as Button
+        if (supportActionBar != null)
+            supportActionBar?.hide()
+        var room1Button = findViewById<Button>(R.id.room1BT) as FrameLayout
+        var room2Button = findViewById<Button>(R.id.room2BT) as FrameLayout
         val user = FirebaseAuth.getInstance().currentUser
         Toast.makeText(this@MainActivity, "You clicked me."+user!!.email, Toast.LENGTH_LONG).show()
         room1Button.setOnClickListener {
