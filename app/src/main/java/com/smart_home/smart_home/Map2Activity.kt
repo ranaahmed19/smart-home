@@ -10,9 +10,9 @@ import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.content.pm.PackageManager
 import android.location.Location
+import android.location.LocationListener
 import android.location.LocationManager
 import android.provider.Settings
-import android.support.v4.content.ContextCompat
 import android.support.annotation.NonNull
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.GoogleMap
@@ -22,24 +22,36 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.LatLng
 
 import android.support.v4.app.FragmentActivity
+import android.support.v4.content.ContextCompat
 import android.util.Log
+import android.widget.TextView
+import android.widget.Toast
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.MarkerOptions
 
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 
-
-class Map2Activity : AppCompatActivity(), OnMapReadyCallback {
+class Map2Activity : AppCompatActivity() , OnMapReadyCallback {
 
     private var mLocationPermissionGranted = false
+    private var usersDatabase = FirebaseDatabase.getInstance().getReference("Users")
     private var  mLastKnownLocation = null
     private var DEFAULT_ZOOM : Float = 17f
-    private val PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 101
+    private val PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 0
     private lateinit var mMap: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private var locationManager : LocationManager? = null
+    private var latitude : Double = 0.0
+    private var longitude : Double= 0.0
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,30 +63,22 @@ class Map2Activity : AppCompatActivity(), OnMapReadyCallback {
 
         // Construct a FusedLocationProviderClient.
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-    }
-
-    private fun getLocationPermission() {
-        /*
-     * Request location permission, so that we can get the location of the
-     * device. The result of the permission request is handled by a callback,
-     * onRequestPermissionsResult.
-     */
-        if (ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED
-        ) {
-            mLocationPermissionGranted = true
-        } else {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION
-            )
-            //showSettingsAlert()
+        locationManager = getSystemService(LOCATION_SERVICE) as LocationManager?
+        val saveLocation = findViewById<TextView>(R.id.saveLocation)
+        saveLocation!!.setOnClickListener{
+            val currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
+            Toast.makeText(this, "" + currentFirebaseUser!!.getUid(), Toast.LENGTH_SHORT).show();
+            val currentUserDb = usersDatabase!!.child(currentFirebaseUser!!.getUid())
+            currentUserDb.child("Latitude").setValue(latitude)
+            currentUserDb.child("Longitude").setValue(longitude)
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent);
 
         }
+
     }
+
+
 
     fun showSettingsAlert() {
         val alertDialog = AlertDialog.Builder(this)
@@ -98,36 +102,24 @@ class Map2Activity : AppCompatActivity(), OnMapReadyCallback {
         alertDialog.show()
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
-    ) {
-        mLocationPermissionGranted = false
-        when (requestCode) {
-            PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION -> {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    mLocationPermissionGranted = true
-                }
-            }
-        }
-        updateLocationUI()
-    }
+
     private fun updateLocationUI() {
         if (mMap == null) {
             return
         }
         try {
-            if (mLocationPermissionGranted) {
+            if (locationManager!!.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                 mMap.setMyLocationEnabled(true)
                 mMap.getUiSettings().setMyLocationButtonEnabled(true)
+                getDeviceLocation()
+
             } else {
                 mMap.setMyLocationEnabled(false)
                 mMap.getUiSettings().setMyLocationButtonEnabled(false)
                 mLastKnownLocation = null
-                getLocationPermission()
+                showSettingsAlert()
                 Log.i("Exception: %s","get perm")
+
             }
         } catch (e: SecurityException) {
             Log.e("Exception: %s", e.message)
@@ -142,30 +134,9 @@ class Map2Activity : AppCompatActivity(), OnMapReadyCallback {
      * cases when a location is not available.
      */
         try {
-            if (mLocationPermissionGranted) {
+            if (locationManager!!.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                 val locationResult = fusedLocationClient.lastLocation
-               /* locationResult.addOnCompleteListener(this, object : OnCompleteListener {
-                    override fun onComplete(task: Task<Location>) {
-                        if (task.isSuccessful) {
-                            // Set the map's camera position to the current location of the device.
-                            mLastKnownLocation = task.result
-                            mMap.moveCamera(
-                                CameraUpdateFactory.newLatLngZoom(
-                                    LatLng(
-                                        mLastKnownLocation.get,
-                                        mLastKnownLocation.getLongitude()
-                                    ), DEFAULT_ZOOM
-                                )
-                            )
-                        } else {
-                            Log.d("henaa", "Current location is null. Using defaults.")
-                            Log.e("henaa", "Exception: %s", task.exception)
-                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mDefaultLocation, DEFAULT_ZOOM))
-                            mMap.getUiSettings().setMyLocationButtonEnabled(false)
-                        }
-                    }
-                })
-                */
+
                 locationResult.addOnSuccessListener { location : Location? ->
                     val Here = LatLng(location!!.latitude,
                         location!!.longitude)
@@ -175,6 +146,17 @@ class Map2Activity : AppCompatActivity(), OnMapReadyCallback {
                         CameraUpdateFactory.newLatLngZoom(
                             Here, DEFAULT_ZOOM
                         ))
+                    Toast.makeText(
+                        applicationContext,
+                        "Longitude:" + java.lang.Double.toString(location!!.longitude) + "\nLatitude:" + java.lang.Double.toString(
+                            location!!.latitude
+                        ),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    latitude = location!!.latitude
+                    longitude = location!!.longitude
+
+
 
                     // Got last known location. In some rare situations this can be null.
                 }
@@ -191,9 +173,9 @@ class Map2Activity : AppCompatActivity(), OnMapReadyCallback {
         // Do other setup activities here too, as described elsewhere in this tutorial.
 
         // Turn on the My Location layer and the related control on the map.
-        updateLocationUI()
-
-        // Get the current location of the device and set the position of the map.
+       updateLocationUI()
        // getDeviceLocation()
+        // Get the current location of the device and set the position of the map.
+
     }
 }

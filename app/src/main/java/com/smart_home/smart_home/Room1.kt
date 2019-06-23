@@ -17,14 +17,12 @@ class Room1 : AppCompatActivity() {
     private var roomsDatabase = FirebaseDatabase.getInstance().getReference("Rooms")
     private var light = roomsDatabase.child("Room1").child("Light")
     private var curtains = roomsDatabase.child("Room1").child("Curtains")
-    private var AC = roomsDatabase.child("Room1").child("AC")
     private var temperature = roomsDatabase.child("Room1").child("Temperature")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_room1)
         controlLight()
         controlCurtains()
-        controlAC()
         controlTemperature()
     }
 
@@ -42,31 +40,7 @@ class Room1 : AppCompatActivity() {
         })
 
     }
-    private fun controlAC(){
-        val AC1TB = findViewById<ToggleButton>(R.id.AC1TB)
-        AC1TB?.setOnCheckedChangeListener { buttonView, isChecked ->
-            if(isChecked)
-                AC.setValue("ON")
-            else AC.setValue("OFF")
-        }
-        AC.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val value = dataSnapshot.getValue(String::class.java)
-                if (value == "ON") {
-                    AC1TB.setTextOn("ON")
-                    AC1TB.setChecked(true)
-                } else {
-                    AC1TB.setTextOff("OFF")
-                    AC1TB.setChecked(false)
-                }
-            }
 
-            override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(this@Room1, "failed", Toast.LENGTH_SHORT).show()
-            }
-        })
-
-    }
 
     private fun controlCurtains(){
         val curtains1TB = findViewById<ToggleButton>(R.id.curtains1TB)
