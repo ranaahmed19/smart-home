@@ -3,6 +3,7 @@ package com.smart_home.smart_home
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.widget.Button
 import android.view.View
 import android.widget.FrameLayout
@@ -33,6 +34,14 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent);
         }
+        startService()
+    }
+
+    private fun startService() {
+        var serviceIntent  = Intent(this,NotificationService::class.java);
+        serviceIntent.putExtra("inputExtra", "Foreground Service Example in Android");
+
+        ContextCompat.startForegroundService(this, serviceIntent);
     }
 
 }
