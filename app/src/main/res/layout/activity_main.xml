@@ -164,7 +164,7 @@
                 android:layout_gravity=""
                 android:background="@android:color/white"
                 android:scaleType="centerInside"
-                app:srcCompat="@drawable/kitchen" />
+                app:srcCompat="@drawable/kitchen"/>
 
         <TextView
                 android:id="@+id/kitchenTextView"
@@ -179,10 +179,9 @@
                 android:textColor="@android:color/black"
                 app:fontFamily="@font/roboto"
                 tools:layout_editor_absoluteX="11dp"
-                tools:layout_editor_absoluteY="226dp" />
+                tools:layout_editor_absoluteY="226dp"/>
 
     </FrameLayout>
-
     <FrameLayout
             android:id="@+id/kidsRoomLayout"
             android:layout_width="178dp"
