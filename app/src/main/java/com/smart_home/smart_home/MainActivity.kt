@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
         room1Button.setOnClickListener {
             // your code to perform when the user clicks on the button
             Toast.makeText(this@MainActivity, "You clicked me.", Toast.LENGTH_SHORT).show()
-            val intent = Intent(this, Kitchen::class.java)
+            val intent = Intent(this, Room1::class.java)
             startActivity(intent);
         }
 

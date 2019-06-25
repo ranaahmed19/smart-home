@@ -162,6 +162,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="105dp"
                 android:layout_gravity=""
+                android:clickable="false"
                 android:background="@android:color/white"
                 android:scaleType="centerInside"
                 app:srcCompat="@drawable/kitchen"/>
@@ -172,7 +173,7 @@
                 android:layout_height="35dp"
                 android:layout_gravity="bottom"
                 android:background="@android:color/white"
-                android:clickable="true"
+                android:clickable="false"
                 android:focusable="true"
                 android:gravity="center"
                 android:text="Kitchen"
