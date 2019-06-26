@@ -3,6 +3,7 @@ package com.smart_home.smart_home
 import android.app.*
 import android.os.Build
 import android.content.Intent
+import android.graphics.drawable.Icon
 import android.os.IBinder
 import android.support.annotation.Nullable
 import android.support.v4.app.NotificationCompat
@@ -19,15 +20,19 @@ class NotificationService : Service() {
 
     val CHANNEL_ID = "ForegroundServiceChannel"
 
-    private var reference = FirebaseDatabase.getInstance().getReference("Notifications")
+    private var db1 = FirebaseDatabase.getInstance()//.getReference("Notifications")
+    private var db2 = FirebaseDatabase.getInstance()
 
-    private var GasDatabase = reference.child("Gas")
-    private var WaterDatabase = reference.child("Water")
+    private var waterNotifRef = db1.getReference("Notifications")
+    private var waterDatabase = waterNotifRef.child("Water")
+
+    private var gasNotifRef = db2.getReference("Notifications")
+    private var gasDatabase = gasNotifRef.child("Gas")
+
+
 
     override fun onCreate() {
         super.onCreate()
-
-
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
@@ -42,16 +47,13 @@ class NotificationService : Service() {
             0, notificationIntent, 0
         )
 
-
-
-
-        GasDatabase.addValueEventListener(object : ValueEventListener {
+        waterDatabase.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-               var notify = dataSnapshot.getValue() as (String)
-                Log.d("change22",notify.toString())
+               var notify = dataSnapshot.getValue() as (Long)
+                //Log.d("change22",notify.toString())
                  val notification = NotificationCompat.Builder(this@NotificationService, CHANNEL_ID)
-                    .setContentTitle("Foreground Service")
-                    .setContentText("Water is leaking")
+                    .setContentTitle("Water Leakage")
+                    .setContentText(notify.toString())
                     .setSmallIcon(R.drawable.ic_adb_user)
                     .setContentIntent(pendingIntent)
                     .build()
@@ -69,8 +71,29 @@ class NotificationService : Service() {
             }
         })
 
+        gasDatabase.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                var notify = dataSnapshot.getValue() as (String)
+                //Log.d("change22",notify.toString())
+                val notification = NotificationCompat.Builder(this@NotificationService, CHANNEL_ID)
+                    .setContentTitle("Gas Leakage")
+                    .setContentText(notify)
+                    .setSmallIcon(R.drawable.ic_adb_user)
+                    .setContentIntent(pendingIntent)
+                    .build()
+                with(NotificationManagerCompat.from(this@NotificationService)) {
+                    // notificationId is a unique int for each notification that you must define
+                    notify(2, notification!!)
+                }
 
+                startForeground(2,notification!!)
+            }
 
+            override fun onCancelled(error: DatabaseError) {
+                Log.d("cancel","iii")
+
+            }
+        })
 
         //do heavy work on a background thread
 
