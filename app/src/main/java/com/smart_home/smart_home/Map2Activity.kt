@@ -1,51 +1,38 @@
 package com.smart_home.smart_home
 
+
 import android.Manifest
 import android.app.AlertDialog
-import android.app.Service
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v4.app.ActivityCompat
-import android.content.pm.PackageManager
 import android.location.Location
-import android.location.LocationListener
 import android.location.LocationManager
 import android.provider.Settings
-import android.support.annotation.NonNull
+import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.CameraUpdateFactory
-
 import com.google.android.gms.maps.model.LatLng
-
-import android.support.v4.app.FragmentActivity
-import android.support.v4.content.ContextCompat
 import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.MarkerOptions
-
-import com.google.android.gms.tasks.Task
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 
 
 class Map2Activity : AppCompatActivity() , OnMapReadyCallback {
 
-    private var mLocationPermissionGranted = false
     private var usersDatabase = FirebaseDatabase.getInstance().getReference("Users")
     private var  mLastKnownLocation = null
     private var DEFAULT_ZOOM : Float = 17f
-    private val PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 0
     private lateinit var mMap: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private var locationManager : LocationManager? = null
@@ -61,11 +48,13 @@ class Map2Activity : AppCompatActivity() , OnMapReadyCallback {
         mapFragment.getMapAsync(this)
 
 
+
         // Construct a FusedLocationProviderClient.
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         locationManager = getSystemService(LOCATION_SERVICE) as LocationManager?
         val saveLocation = findViewById<TextView>(R.id.saveLocation)
         saveLocation!!.setOnClickListener{
+            //getDeviceLocation()
             val currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
             Toast.makeText(this, "" + currentFirebaseUser!!.getUid(), Toast.LENGTH_SHORT).show();
             val currentUserDb = usersDatabase!!.child(currentFirebaseUser!!.getUid())
@@ -101,6 +90,23 @@ class Map2Activity : AppCompatActivity() , OnMapReadyCallback {
 
         alertDialog.show()
     }
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        when (requestCode) {
+            1 -> {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    getDeviceLocation()
+
+
+                } else {
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return
+            }
+        }// other 'case' lines to check for other
+        // permissions this app might request
+    }
 
 
     private fun updateLocationUI() {
@@ -108,14 +114,20 @@ class Map2Activity : AppCompatActivity() , OnMapReadyCallback {
             return
         }
         try {
-            if (locationManager!!.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                mMap.setMyLocationEnabled(true)
-                mMap.getUiSettings().setMyLocationButtonEnabled(true)
+            if (locationManager!!.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+
+                if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) ==
+                    PackageManager.PERMISSION_GRANTED ){
+                mMap.isMyLocationEnabled = true
+                mMap.uiSettings.isMapToolbarEnabled = true
                 getDeviceLocation()
 
+
+
+            }else ActivityCompat.requestPermissions(this,arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1);
             } else {
-                mMap.setMyLocationEnabled(false)
-                mMap.getUiSettings().setMyLocationButtonEnabled(false)
+                mMap.isMyLocationEnabled = false
+                mMap.uiSettings.isMapToolbarEnabled = false
                 mLastKnownLocation = null
                 showSettingsAlert()
                 Log.i("Exception: %s","get perm")
@@ -134,12 +146,16 @@ class Map2Activity : AppCompatActivity() , OnMapReadyCallback {
      * cases when a location is not available.
      */
         try {
-            if (locationManager!!.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            Log.d("outside","get perm")
+            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) ==
+                PackageManager.PERMISSION_GRANTED &&locationManager!!.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                 val locationResult = fusedLocationClient.lastLocation
+                Log.d("inside","locationRes0")
 
                 locationResult.addOnSuccessListener { location : Location? ->
                     val Here = LatLng(location!!.latitude,
                         location!!.longitude)
+                    Log.d("inside2323",Here.toString())
                     mMap.addMarker(MarkerOptions().position(Here).title("Marker in Here"))
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(Here))
                     mMap.moveCamera(
@@ -160,7 +176,10 @@ class Map2Activity : AppCompatActivity() , OnMapReadyCallback {
 
                     // Got last known location. In some rare situations this can be null.
                 }
-            }
+
+                locationResult.addOnFailureListener {
+                    Log.e("Exception: %s", "eeeee")
+                }          }
         } catch (e: SecurityException) {
             Log.e("Exception: %s", e.message)
         }
