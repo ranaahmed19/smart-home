@@ -12,16 +12,6 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
 
-        <activity
-                android:name=".Room3"
-                android:label="@string/title_activity_room3"
-                android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-        <activity
-                android:name=".Room2"
-                android:label="@string/title_activity_room2"
-                android:theme="@style/AppTheme.NoActionBar">
-        </activity>
         <activity android:name=".Kitchen">
         </activity>
         <activity android:name=".Room1">
@@ -31,6 +21,7 @@
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
+
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
@@ -42,9 +33,9 @@
         <service
                 android:name=".NotificationService"
                 android:enabled="true"
-                android:exported="true"
-        />
+                android:exported="true"/>
 
+        <receiver android:name=".ActionReceiver" />
     </application>
 
 </manifest>
