@@ -15,6 +15,38 @@
       },
       "oauth_client": [
         {
+          "client_id": "37463648108-ohljv3u2nq4q1l1lq2pc6ous1fpse136.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.smart_home.smart_home",
+            "certificate_hash": "7478bc5e50a374380c3b9cf05196778b8a9db034"
+          }
+        },
+        {
+          "client_id": "37463648108-b3f21vo15nh4g7kaqg4e2j6g9kanit5j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.smart_home.smart_home",
+            "certificate_hash": "7306f757119ff6f521da2f5691546a74d92a1fc2"
+          }
+        },
+        {
+          "client_id": "37463648108-lngb4s9eq8ad2skgjjq7o22jldsr872o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.smart_home.smart_home",
+            "certificate_hash": "62cbe82cb7bdf763f3563c801cc3d53d1698955c"
+          }
+        },
+        {
+          "client_id": "37463648108-rjaiggp3vqdageheasjivqjtp42vhklp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.smart_home.smart_home",
+            "certificate_hash": "d0ebef46ac4d04ad2758286997314807d11c243b"
+          }
+        },
+        {
           "client_id": "37463648108-qie0et2c8gi4ipgq4kqtq86m4rf6vqdk.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -25,15 +57,13 @@
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 2
+          "other_platform_oauth_client": [
+            {
+              "client_id": "37463648108-qie0et2c8gi4ipgq4kqtq86m4rf6vqdk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

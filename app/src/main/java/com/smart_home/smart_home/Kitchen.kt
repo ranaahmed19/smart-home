@@ -40,7 +40,12 @@ class Kitchen : AppCompatActivity() {
                     c1.setText(key!!.toString())
                     c1.height= 100
                     c2.height = 100
-                    row.setBackgroundColor(rgb(179, 239, 235))
+                    c1.setBackgroundResource(R.drawable.textview_boarder)
+                    c2.setBackgroundResource(R.drawable.textview_boarder)
+                    c1.setPadding(30,10,10,10)
+                    c2.setPadding(30,10,10,10)
+
+                    row.setBackgroundColor(rgb(211,211,211))
                     //c2.layoutParams = ViewGroup.LayoutParams(60,60)
                     c2.setText(value!!.toString())
                     row.addView(c1)

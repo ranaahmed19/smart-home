@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.smart_home.smart_home">
 
+
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
@@ -39,5 +40,4 @@
         <activity android:name=".MainActivity">
         </activity>
     </application>
-
 </manifest>
