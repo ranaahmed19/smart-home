@@ -47,7 +47,7 @@ class NotificationService : Service() {
 
         GasDatabase.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-               var notify = dataSnapshot.getValue() as (String)
+               var notify = dataSnapshot.getValue()
                 Log.d("change22",notify.toString())
                  val notification = NotificationCompat.Builder(this@NotificationService, CHANNEL_ID)
                     .setContentTitle("Foreground Service")

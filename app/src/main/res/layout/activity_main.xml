@@ -6,9 +6,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/background"
-        tools:context=".MainActivity"
->
+        tools:context=".MainActivity">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
+                  android:id="@+id/linearLayout">
+        <android.support.v7.widget.Toolbar android:layout_width="match_parent"
+                                           android:layout_height="?attr/actionBarSize"
+                                           android:id="@+id/toolbar">
 
+        </android.support.v7.widget.Toolbar>
+    </LinearLayout>
     <TextView
             android:id="@+id/mainTV"
             android:layout_width="140dp"
@@ -22,245 +28,168 @@
             app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="8dp"
             android:layout_marginTop="68dp"
             app:layout_constraintTop_toTopOf="parent"/>
-
-    <FrameLayout
-            android:id="@+id/room1BT"
-            android:layout_width="178dp"
-            android:layout_height="140dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="43dp"
-            android:clickable="true"
-            android:focusable="true"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mainTV">
-
-        <ImageButton
-                android:id="@+id/bedroomButton"
-                android:layout_width="match_parent"
-                android:layout_height="111dp"
-                android:layout_gravity=""
-                android:background="@android:color/white"
-                android:scaleType="centerInside"
-                app:srcCompat="@drawable/bedroom"
-                android:clickable="false"
-        />
-
-        <TextView
-                android:id="@+id/bedroomTextView"
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_gravity="bottom"
-                android:background="@android:color/white"
-                android:gravity="center"
-                android:text="Bedroom"
-                android:textColor="@android:color/black"
-                app:fontFamily="@font/roboto"
-                tools:layout_editor_absoluteX="11dp"
-                tools:layout_editor_absoluteY="226dp" />
-
-    </FrameLayout>
-
-    <FrameLayout
-            android:id="@+id/room2BT"
-            android:layout_width="178dp"
-            android:layout_height="140dp"
-            android:layout_marginStart="22dp"
-            android:layout_marginLeft="22dp"
-            android:layout_marginTop="43dp"
-            android:layout_marginEnd="17dp"
-            android:layout_marginRight="17dp"
-            android:clickable="true"
-            android:focusable="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/room1BT"
-            app:layout_constraintTop_toBottomOf="@+id/mainTV">
-
-        <ImageButton
-                android:id="@+id/livingroomButton"
-                android:layout_width="match_parent"
-                android:layout_height="105dp"
-                android:layout_gravity=""
-                android:background="@android:color/white"
-                android:scaleType="centerInside"
-                app:srcCompat="@drawable/livingroom" />
-
-        <TextView
-                android:id="@+id/livingroomTextView"
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_gravity="bottom"
-                android:background="@android:color/white"
+    <android.support.constraint.ConstraintLayout android:layout_width="0dp"
+                                                 android:layout_height="515dp"
+                                                 app:layout_constraintEnd_toEndOf="parent"
+                                                 app:layout_constraintStart_toStartOf="parent"
+                                                 app:layout_constraintHorizontal_bias="0.0"
+                                                 android:layout_marginTop="8dp"
+                                                 app:layout_constraintTop_toBottomOf="@+id/mainTV"
+                                                 android:layout_marginBottom="8dp"
+                                                 app:layout_constraintBottom_toBottomOf="@+id/linearLayout">
+        <FrameLayout
+                android:id="@+id/room1BT"
+                android:layout_width="178dp"
+                android:layout_height="140dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
                 android:clickable="true"
                 android:focusable="true"
-                android:gravity="center"
-                android:text="Livingroom"
-                android:textColor="@android:color/black"
-                app:fontFamily="@font/roboto"
-                tools:layout_editor_absoluteX="11dp"
-                tools:layout_editor_absoluteY="226dp" />
+                app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="20dp"
+                app:layout_constraintTop_toTopOf="parent">
 
-    </FrameLayout>
+            <ImageButton
+                    android:id="@+id/bedroomButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="111dp"
+                    android:layout_gravity=""
+                    android:background="@android:color/white"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/bedroom"
+                    android:clickable="false"
+            />
 
-    <FrameLayout
-            android:id="@+id/bathroomLayout"
-            android:layout_width="178dp"
-            android:layout_height="140dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="228dp"
-            android:clickable="true"
-            android:focusable="true"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mainTV">
+            <TextView
+                    android:id="@+id/bedroomTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_gravity="bottom"
+                    android:background="@android:color/white"
+                    android:gravity="center"
+                    android:text="Bedroom"
+                    android:textColor="@android:color/black"
+                    app:fontFamily="@font/roboto"
+                    tools:layout_editor_absoluteX="11dp"
+                    tools:layout_editor_absoluteY="226dp"/>
 
-        <ImageButton
-                android:id="@+id/bathroomButton"
-                android:layout_width="match_parent"
-                android:layout_height="111dp"
-                android:layout_gravity=""
-                android:background="@android:color/white"
-                android:scaleType="centerInside"
-
-                android:src="@drawable/bathroom" />
-
-        <TextView
-                android:id="@+id/bathroomTextView"
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_gravity="bottom"
-                android:background="@android:color/white"
+        </FrameLayout>
+        <FrameLayout
+                android:id="@+id/room2BT"
+                android:layout_width="178dp"
+                android:layout_height="140dp"
+                android:layout_marginStart="22dp"
+                android:layout_marginLeft="22dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
                 android:clickable="true"
                 android:focusable="true"
-                android:gravity="center"
-                android:text="Bathroom"
-                android:textColor="@android:color/black"
-                app:fontFamily="@font/roboto"
-                tools:layout_editor_absoluteX="11dp"
-                tools:layout_editor_absoluteY="226dp" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/room1BT" app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="20dp">
 
-    </FrameLayout>
+            <ImageButton
+                    android:id="@+id/livingroomButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="105dp"
+                    android:layout_gravity=""
+                    android:background="@android:color/white"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/livingroom"/>
 
-    <FrameLayout
-            android:id="@+id/kitchenLayout"
-            android:layout_width="178dp"
-            android:layout_height="140dp"
-            android:layout_marginStart="22dp"
-            android:layout_marginLeft="22dp"
-            android:layout_marginTop="228dp"
-            android:layout_marginEnd="17dp"
-            android:layout_marginRight="17dp"
-            android:clickable="true"
-            android:focusable="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/bedroomLayout"
-            app:layout_constraintTop_toBottomOf="@+id/mainTV">
+            <TextView
+                    android:id="@+id/livingroomTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_gravity="bottom"
+                    android:background="@android:color/white"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:text="Livingroom"
+                    android:textColor="@android:color/black"
+                    app:fontFamily="@font/roboto"
+                    tools:layout_editor_absoluteX="11dp"
+                    tools:layout_editor_absoluteY="226dp"/>
 
-        <ImageButton
-                android:id="@+id/kitchenButton"
-                android:layout_width="match_parent"
-                android:layout_height="105dp"
-                android:layout_gravity=""
-                android:background="@android:color/white"
-                android:scaleType="centerInside"
-                app:srcCompat="@drawable/kitchen" />
-
-        <TextView
-                android:id="@+id/kitchenTextView"
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_gravity="bottom"
-                android:background="@android:color/white"
+        </FrameLayout>
+        <FrameLayout
+                android:id="@+id/bathroomLayout"
+                android:layout_width="178dp"
+                android:layout_height="140dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
                 android:clickable="true"
                 android:focusable="true"
-                android:gravity="center"
-                android:text="Kitchen"
-                android:textColor="@android:color/black"
-                app:fontFamily="@font/roboto"
-                tools:layout_editor_absoluteX="11dp"
-                tools:layout_editor_absoluteY="226dp" />
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="100dp" app:layout_constraintTop_toBottomOf="@+id/room1BT">
 
-    </FrameLayout>
+            <ImageButton
+                    android:id="@+id/bathroomButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="111dp"
+                    android:layout_gravity=""
+                    android:background="@android:color/white"
+                    android:scaleType="centerInside"
 
-    <FrameLayout
-            android:id="@+id/kidsRoomLayout"
-            android:layout_width="178dp"
-            android:layout_height="140dp"
-            android:layout_marginStart="22dp"
-            android:layout_marginLeft="22dp"
-            android:layout_marginTop="400dp"
-            android:layout_marginEnd="17dp"
-            android:layout_marginRight="17dp"
-            android:clickable="true"
-            android:focusable="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/bedroomLayout"
-            app:layout_constraintTop_toBottomOf="@+id/mainTV">
+                    android:src="@drawable/bathroom"/>
 
-        <ImageButton
-                android:id="@+id/kidsRoomnButton"
-                android:layout_width="match_parent"
-                android:layout_height="105dp"
-                android:layout_gravity=""
-                android:background="@android:color/white"
-                android:scaleType="centerInside"
-                app:srcCompat="@drawable/kidsroom" />
+            <TextView
+                    android:id="@+id/bathroomTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_gravity="bottom"
+                    android:background="@android:color/white"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:text="Bathroom"
+                    android:textColor="@android:color/black"
+                    app:fontFamily="@font/roboto"
+                    tools:layout_editor_absoluteX="11dp"
+                    tools:layout_editor_absoluteY="226dp"/>
 
-        <TextView
-                android:id="@+id/kidsRoomTextView"
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_gravity="bottom"
-                android:background="@android:color/white"
+        </FrameLayout>
+        <FrameLayout
+                android:id="@+id/kitchenLayout"
+                android:layout_width="178dp"
+                android:layout_height="140dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
                 android:clickable="true"
                 android:focusable="true"
-                android:gravity="center"
-                android:text="Kids Room"
-                android:textColor="@android:color/black"
-                app:fontFamily="@font/roboto"
-                tools:layout_editor_absoluteX="11dp"
-                tools:layout_editor_absoluteY="226dp" />
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="100dp" app:layout_constraintTop_toBottomOf="@+id/room2BT"
+                app:layout_constraintStart_toEndOf="@+id/bathroomLayout" android:layout_marginStart="22dp"
+                android:layout_marginLeft="22dp">
 
-    </FrameLayout>
+            <ImageButton
+                    android:id="@+id/kitchenButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="105dp"
+                    android:layout_gravity=""
+                    android:background="@android:color/white"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/kitchen"/>
 
-    <FrameLayout
-            android:id="@+id/diningRoomLayout"
-            android:layout_width="178dp"
-            android:layout_height="140dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="400dp"
-            android:clickable="true"
-            android:focusable="true"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mainTV">
+            <TextView
+                    android:id="@+id/kitchenTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_gravity="bottom"
+                    android:background="@android:color/white"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:text="Kitchen"
+                    android:textColor="@android:color/black"
+                    app:fontFamily="@font/roboto"
+                    tools:layout_editor_absoluteX="11dp"
+                    tools:layout_editor_absoluteY="226dp"/>
 
-        <ImageButton
-                android:id="@+id/diningRoomButton"
-                android:layout_width="match_parent"
-                android:layout_height="111dp"
-                android:layout_gravity=""
-                android:background="@android:color/white"
-                android:scaleType="centerInside"
-                app:srcCompat="@drawable/diningroom" />
+        </FrameLayout>
+    </android.support.constraint.ConstraintLayout>
 
-        <TextView
-                android:id="@+id/diningRoomTextView"
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_gravity="bottom"
-                android:background="@android:color/white"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center"
-                android:text="Dining Room"
-                android:textColor="@android:color/black"
-                app:fontFamily="@font/roboto"
-                tools:layout_editor_absoluteX="11dp"
-                tools:layout_editor_absoluteY="226dp" />
 
-    </FrameLayout>
+
 
 </android.support.constraint.ConstraintLayout>
