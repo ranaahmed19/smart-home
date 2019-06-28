@@ -24,10 +24,11 @@ class NotificationService : Service() {
 
     private var reference = db1.getReference("Notifications")
     private var waterReading : Double = 0.0
-    private var gasReading : Long = 0
+    private var gasReading : Double = 0.0
 
     override fun onCreate() {
         super.onCreate()
+        startForeground(101,NotificationCompat.Builder(this@NotificationService,CHANNEL_ID).build())
         val notificationIntent = Intent(this, MainActivity::class.java)
         val pendingIntent = PendingIntent.getActivity(
             this,
@@ -54,14 +55,14 @@ class NotificationService : Service() {
                             .setSmallIcon(R.drawable.ic_adb_user)
                             .setContentIntent(pendingIntent)
                             .setAutoCancel(true)
+                            .setDeleteIntent(pendingIntent)
                             .build()
 
-                        startForeground(1,waterNotification!!)
+                        //startForeground(1,waterNotification!!)
                         with(NotificationManagerCompat.from(this@NotificationService)) {
                             // notificationId is a unique int for each notification that you must define
                             notify(1, waterNotification!!)
                         }
-
                         waterReading = it.value as (Double)
                     }
                 }else if(it.key == "Gas"){
@@ -77,13 +78,12 @@ class NotificationService : Service() {
                             //.addExtras(it.value.toString())
                             .build()
 
-                        startForeground(2,gasNotification!!)
+                        //startForeground(2,gasNotification!!)
                         with(NotificationManagerCompat.from(this@NotificationService)) {
                             // notificationId is a unique int for each notification that you must define
                             notify(2, gasNotification!!)
                         }
-
-                        gasReading = it.value as (Long)
+                        gasReading = it.value as (Double)
                     }
                 }else if(it.key == "FaceDetected"){
                     //var requests : DataSnapshot = it.value as (DataSnapshot) )
@@ -106,7 +106,7 @@ class NotificationService : Service() {
                             .addAction(R.drawable.clear, "Deny", pIntentR)
                             .build()
 
-                        startForeground(3,reqNotification!!)
+                        //startForeground(3,reqNotification!!)
                         with(NotificationManagerCompat.from(this@NotificationService)) {
                             // notificationId is a unique int for each notification that you must define
                             notify(3, reqNotification!!)
@@ -115,6 +115,7 @@ class NotificationService : Service() {
                 }
             }
             }
+
             override fun onCancelled(error: DatabaseError) {
                 Log.d("cancel","iii")
 

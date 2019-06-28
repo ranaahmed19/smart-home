@@ -26,6 +26,6 @@ class ActionReceiver : BroadcastReceiver() {
         }
         //This is used to close the notification tray
         var it : Intent = Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
-        p0!!.sendBroadcast(it);
+        p0!!.sendBroadcast(it)
     }
 }
