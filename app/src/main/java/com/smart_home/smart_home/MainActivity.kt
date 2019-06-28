@@ -20,6 +20,9 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
+import android.app.Activity
+
+
 
 
 
@@ -38,9 +41,7 @@ class MainActivity : AppCompatActivity() {
             supportActionBar?.hide()
         var room1Button = findViewById<Button>(R.id.room1BT) as FrameLayout
         var room2Button = findViewById<Button>(R.id.room2BT) as FrameLayout
-        var room1Button = findViewById<Button>(R.id.room1BT) as Button
-        var room2Button = findViewById<Button>(R.id.room2BT) as Button
-        var room3Button = findViewById<Button>(R.id.room3BT) as Button
+        var room3Button = findViewById<Button>(R.id.kitchenLayout) as FrameLayout
         val user = FirebaseAuth.getInstance().currentUser
         Toast.makeText(this@MainActivity, "You clicked me."+user!!.email, Toast.LENGTH_LONG).show()
         room1Button.setOnClickListener {
@@ -70,6 +71,8 @@ class MainActivity : AppCompatActivity() {
         val user = auth!!.currentUser
         val mail = user!!.email
         val item2 = PrimaryDrawerItem().withIdentifier(1).withName("Sign Out").withSetSelected(false)
+        val item3 = PrimaryDrawerItem().withIdentifier(2).withName("Away Mode").withSetSelected(false)
+        val item4 = PrimaryDrawerItem().withIdentifier(3).withName(" turn off Away Mode").withSetSelected(false)
         val headerResult = AccountHeaderBuilder().withActivity(this)
             .addProfiles(
                 ProfileDrawerItem().withIcon(getResources().getDrawable(R.drawable.logo)).withTextColor(Color.BLACK).withEmail(mail).withName("My Home")
@@ -85,7 +88,9 @@ class MainActivity : AppCompatActivity() {
             .withActivity(this)
             .withToolbar(toolbar)
             .addDrawerItems(
-                item2
+                item2,
+                item3,
+                item4
             )
             .withOnDrawerItemClickListener(object : Drawer.OnDrawerItemClickListener {
                 override fun onItemClick(view: View?, position: Int, drawerItem: IDrawerItem<*,*>): Boolean {
@@ -93,6 +98,14 @@ class MainActivity : AppCompatActivity() {
                         FirebaseAuth.getInstance().signOut()
                         val intent = Intent(activity, LoginActivity::class.java)
                         startActivity(intent)
+                    }
+                    else if (position == 2){
+                        val intent = Intent(activity,TrackingService::class.java)
+                        startService(intent)
+                    }
+                    else if (position == 3){
+                        val intent = Intent(activity,TrackingService::class.java)
+                        stopService(intent);
                     }
                     return false
                 }
@@ -105,7 +118,7 @@ class MainActivity : AppCompatActivity() {
         var serviceIntent  = Intent(this,NotificationService::class.java);
         serviceIntent.putExtra("inputExtra", "Foreground Service Example in Android");
 
-        ContextCompat.startForegroundService(this, serviceIntent);
+        //ContextCompat.startForegroundService(this, serviceIntent);
     }
 
 }
