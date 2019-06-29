@@ -11,43 +11,32 @@
             android:orientation="vertical"
             android:background="#ffffff" >
 
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:gravity="center"
-                android:text="Food in Kitchen" android:layout_alignRight="@+id/foodTable"
-                android:layout_marginRight="175dp" android:layout_marginEnd="175dp"
-                android:layout_alignEnd="@+id/foodTable" android:layout_marginLeft="137dp"
-                android:layout_marginStart="137dp" android:layout_alignLeft="@+id/foodTable"
-                android:layout_alignStart="@+id/foodTable" android:id="@+id/foodTextView"/>
-
-
         <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
                      android:id="@+id/foodTable"
                      app:layout_constraintTop_toBottomOf="@+id/foodTextView"
                      android:layout_width="match_parent"
                      android:layout_height="match_parent"
-                     android:layout_marginTop="30dp"
+                     android:layout_marginTop="10dp"
                      android:paddingLeft="10dp"
                      android:paddingRight="10dp"
                      android:shrinkColumns="*"
-                     android:stretchColumns="*" >
-            <TableRow android:background="#06d8ca" android:padding="0dp"    >
+                     android:stretchColumns="*" android:layout_alignParentTop="true">
+            <TableRow android:background="#00bcd4" android:padding="0dp">
                 <TextView
                         android:background="@drawable/textview_boarder"
-                        android:layout_width="15dp"
+                        android:layout_width="20dp"
                         android:layout_height="40dp"
                         android:padding="10dp"
                         android:layout_weight="1"
-                        android:text="Item" />
+                        android:text="Item" android:textColor="#ffffff"/>
                 <TextView
-                        android:layout_width="25dp"
+                        android:layout_width="35dp"
                         android:layout_height="40dp"
                         android:layout_weight="1"
                         android:padding="10dp"
                         android:background="@drawable/textview_boarder"
 
-                        android:text="availability" />
+                        android:text="Availability" android:textColor="#ffffff"/>
 
 
             </TableRow>
