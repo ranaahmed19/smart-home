@@ -18,6 +18,10 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.maps.android.SphericalUtil
+import com.google.android.gms.maps.model.LatLng
+
+
 
 
 class TrackingService : Service() {
@@ -42,6 +46,13 @@ class TrackingService : Service() {
                 locationResult ?: return
                 for (location in locationResult.locations){
                     Log.d("loc",location.toString())
+                    val currentLatlng = LatLng(location.latitude,location.longitude)
+                    val fixedLatlng = LatLng(lat,long)
+                    var distance = distanceBetween(fixedLatlng,currentLatlng)
+                    Log.d("distance1",distance.toString())
+                    distance = calculateDifference(location.latitude,location.longitude)
+                    Log.d("distance2",distance.toString())
+
                 }
             }
         }
@@ -64,7 +75,34 @@ class TrackingService : Service() {
         Toast.makeText(this, "Invoke background service onDestroy method.", Toast.LENGTH_LONG).show()
     }
 
+    fun distanceBetween(point1: LatLng?, point2: LatLng?): Double? {
+        return if (point1 == null || point2 == null) {
+            null
+        } else SphericalUtil.computeDistanceBetween(point1, point2)
 
+    }
+
+    private fun calculateDifference(currentLat : Double , currentLong : Double) : Double{
+
+        var theta = long - currentLong;
+        var dist = Math.sin(deg2rad(lat)).times( Math.sin(deg2rad(currentLat)))
+        var dist2 =  Math.cos(deg2rad(lat)).times(Math.cos(deg2rad(currentLat)))
+        dist2 = dist2.times(Math.cos(deg2rad(theta)))
+        dist = dist + dist2
+        dist = Math.acos(dist);
+        dist = rad2deg(dist);
+        dist = dist * 60 * 1.1515;
+        return dist
+
+    }
+
+    private fun deg2rad( deg : Double) : Double {
+        return deg * Math.PI / 180.0
+    }
+
+    private fun rad2deg(rad : Double) :Double {
+        return (rad * 180.0 / Math.PI);
+    }
 
 
     private fun getCurrentLocation(){

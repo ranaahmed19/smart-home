@@ -54,50 +54,50 @@ class Map2Activity : AppCompatActivity() , OnMapReadyCallback {
         locationManager = getSystemService(LOCATION_SERVICE) as LocationManager?
         val saveLocation = findViewById<TextView>(R.id.saveLocation)
         saveLocation!!.setOnClickListener{
+
+            if(latitude != 0.0 && longitude != 0.0){
             //getDeviceLocation()
             val currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
-            Toast.makeText(this, "" + currentFirebaseUser!!.getUid(), Toast.LENGTH_SHORT).show();
             val currentUserDb = usersDatabase!!.child(currentFirebaseUser!!.getUid())
             currentUserDb.child("Latitude").setValue(latitude)
             currentUserDb.child("Longitude").setValue(longitude)
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent);
+            }
+            else{
+                if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) ==
+                    PackageManager.PERMISSION_GRANTED &&locationManager!!.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+                    getDeviceLocation()
+                }else Toast.makeText(
+                    applicationContext, "Permission denied or GPS iis turned off",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
 
         }
 
     }
 
-
-
     fun showSettingsAlert() {
         val alertDialog = AlertDialog.Builder(this)
-
-
         alertDialog.setTitle("GPS is not Enabled!")
-
         alertDialog.setMessage("Do you want to turn on GPS?")
-
-
         alertDialog.setPositiveButton("Yes", DialogInterface.OnClickListener { dialog, which ->
             val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
             this.startActivity(intent)
         })
-
-
         alertDialog.setNegativeButton("No",
             DialogInterface.OnClickListener { dialog, which -> dialog.cancel() })
-
-
         alertDialog.show()
     }
+
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         when (requestCode) {
             1 -> {
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     getDeviceLocation()
-
-
                 } else {
                     // permission denied, boo! Disable the
                     // functionality that depends on this permission.
@@ -151,7 +151,6 @@ class Map2Activity : AppCompatActivity() , OnMapReadyCallback {
                 PackageManager.PERMISSION_GRANTED &&locationManager!!.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                 val locationResult = fusedLocationClient.lastLocation
                 Log.d("inside","locationRes0")
-
                 locationResult.addOnSuccessListener { location : Location? ->
                     val Here = LatLng(location!!.latitude,
                         location!!.longitude)
@@ -171,12 +170,7 @@ class Map2Activity : AppCompatActivity() , OnMapReadyCallback {
                     ).show()
                     latitude = location!!.latitude
                     longitude = location!!.longitude
-
-
-
-                    // Got last known location. In some rare situations this can be null.
                 }
-
                 locationResult.addOnFailureListener {
                     Log.e("Exception: %s", "eeeee")
                 }          }
@@ -188,13 +182,6 @@ class Map2Activity : AppCompatActivity() , OnMapReadyCallback {
 
     override fun onMapReady(map: GoogleMap) {
         mMap = map
-
-        // Do other setup activities here too, as described elsewhere in this tutorial.
-
-        // Turn on the My Location layer and the related control on the map.
        updateLocationUI()
-       // getDeviceLocation()
-        // Get the current location of the device and set the position of the map.
-
     }
 }
