@@ -28,7 +28,12 @@ class NotificationService : Service() {
 
     override fun onCreate() {
         super.onCreate()
+
         startForeground(10021,NotificationCompat.Builder(this@NotificationService,CHANNEL_ID).build())
+
+        createNotificationChannel()
+        startForeground(102,NotificationCompat.Builder(this@NotificationService,CHANNEL_ID).build())
+
         val notificationIntent = Intent(this, MainActivity::class.java)
         val pendingIntent = PendingIntent.getActivity(
             this,
@@ -88,13 +93,17 @@ class NotificationService : Service() {
                     }
                 }else if(it.key == "FaceDetected"){
                     //var requests : DataSnapshot = it.value as (DataSnapshot) )
+
                     var notfId = 100
                     var reqCode = 1000
                     it.children.forEach{
 
                         Log.d("Value",it.value.toString())
 
+
                         if(it.value.toString() == "Request"){
+                            val pIntentR = PendingIntent.getBroadcast(cont,reqCode++,intentReject,PendingIntent.FLAG_UPDATE_CURRENT)
+                            val pIntentA = PendingIntent.getBroadcast(cont,reqCode++,intentAccept,PendingIntent.FLAG_UPDATE_CURRENT)
 
                             intentAccept.putExtra("User",it.key.toString())
                             intentReject.putExtra("User",it.key.toString())
@@ -116,8 +125,7 @@ class NotificationService : Service() {
                             //startForeground(3,reqNotification!!)
                             with(NotificationManagerCompat.from(this@NotificationService)) {
                             // notificationId is a unique int for each notification that you must define
-                            notify(notfId++, reqNotification!!)
-                            }
+                            notify(notifId++, reqNotification!!)
                         }
                     }
                 }

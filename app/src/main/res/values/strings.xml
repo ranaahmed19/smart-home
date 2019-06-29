@@ -32,5 +32,16 @@
     <string name="btn_sign_out">Sign Out</string>
     <string name="lbl_forgot_password">Forgot password?</string>
     <string name="forgot_password_msg">We just need your registered Email Id to sent you password reset instructions.
+
     </string>
+    <string name="title_activity_maps">Map</string>
+    <string name="temperature">Temperature</string>
+    <string name="light">Light</string>
+    <string name="room1">Room 1</string>
+    <string name="AC">AC</string>
+    <string name="curtains">Curtains</string>
+    <string name="closed">Closed</string>
+    <string name="opened">Opened</string>
+    <string name="find_location">Find my location!</string>
+    <string name="title_activity_maps2">Map</string>
 </resources>
