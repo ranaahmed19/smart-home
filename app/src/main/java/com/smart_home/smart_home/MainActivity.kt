@@ -9,7 +9,6 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.widget.Button
-import android.view.View
 import android.widget.FrameLayout
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
@@ -124,7 +123,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun startService() {
-        var serviceIntent  = Intent(this,NotificationService::class.java);
+        var serviceIntent  = Intent(this, NotificationService::class.java);
         serviceIntent.putExtra("inputExtra", "Foreground Service Example in Android");
 
         //ContextCompat.startForegroundService(this, serviceIntent);
