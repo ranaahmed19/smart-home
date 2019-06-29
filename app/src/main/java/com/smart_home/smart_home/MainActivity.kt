@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity() {
             supportActionBar?.hide()
         var room1Button = findViewById<Button>(R.id.room1BT) as FrameLayout
         var room2Button = findViewById<Button>(R.id.room2BT) as FrameLayout
+        var kitchenButton = findViewById<Button>(R.id.kitchenLayout) as FrameLayout
         val user = FirebaseAuth.getInstance().currentUser
         Toast.makeText(this@MainActivity, "You clicked me."+user!!.email, Toast.LENGTH_LONG).show()
         room1Button.setOnClickListener {
@@ -46,6 +47,13 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, Room1::class.java)
             startActivity(intent);
         }
+
+        kitchenButton.setOnClickListener {
+            Toast.makeText(this@MainActivity, "You clicked me.", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, Kitchen::class.java)
+            startActivity(intent);
+        }
+
         room2Button.setOnClickListener { // used as a log out button until we make a log out button
             FirebaseAuth.getInstance().signOut()
             Toast.makeText(this@MainActivity, "You clicked me.", Toast.LENGTH_SHORT).show()
