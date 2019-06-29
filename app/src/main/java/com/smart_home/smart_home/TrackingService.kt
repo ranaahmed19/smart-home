@@ -27,11 +27,15 @@ import com.google.android.gms.maps.model.LatLng
 class TrackingService : Service() {
 
     private var usersDatabase = FirebaseDatabase.getInstance().getReference("Users")
+    private var roomsDatabase = FirebaseDatabase.getInstance().getReference("Rooms")
+    private var light = roomsDatabase.child("Room1").child("Light")
     private var lat : Double = 0.0
     private var long : Double = 0.0
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private var locationManager : LocationManager? = null
     private lateinit var locationCallback: LocationCallback
+    private val minDistance : Double = 100.0
+    private var status : String = "Near"
 
 
     override fun onBind(intent: Intent): IBinder {
@@ -45,18 +49,21 @@ class TrackingService : Service() {
             override fun onLocationResult(locationResult: LocationResult?) {
                 locationResult ?: return
                 for (location in locationResult.locations){
-                    Log.d("loc",location.toString())
-                    val currentLatlng = LatLng(location.latitude,location.longitude)
-                    val fixedLatlng = LatLng(lat,long)
-                    var distance = distanceBetween(fixedLatlng,currentLatlng)
-                    Log.d("distance1",distance.toString())
-                    distance = calculateDifference(location.latitude,location.longitude)
-                    Log.d("distance2",distance.toString())
-
+                    if(lat !=0.0 && long != 0.0 ){
+                        Log.d("loc",location.toString())
+                        val currentLatlng = LatLng(location.latitude,location.longitude)
+                        val fixedLatlng = LatLng(lat,long)
+                        var currentDistance = distanceBetween(fixedLatlng,currentLatlng)
+                        Log.d("distance1",currentDistance.toString())
+                        if(currentDistance!! > minDistance){
+                           light.setValue("OFF")
+                        }else {
+                           light.setValue("ON")
+                        }
+                    }
                 }
             }
         }
-
         Toast.makeText(this, "Invoke background service onCreate method.", Toast.LENGTH_LONG).show()
         super.onCreate()
     }
@@ -82,32 +89,9 @@ class TrackingService : Service() {
 
     }
 
-    private fun calculateDifference(currentLat : Double , currentLong : Double) : Double{
-
-        var theta = long - currentLong;
-        var dist = Math.sin(deg2rad(lat)).times( Math.sin(deg2rad(currentLat)))
-        var dist2 =  Math.cos(deg2rad(lat)).times(Math.cos(deg2rad(currentLat)))
-        dist2 = dist2.times(Math.cos(deg2rad(theta)))
-        dist = dist + dist2
-        dist = Math.acos(dist);
-        dist = rad2deg(dist);
-        dist = dist * 60 * 1.1515;
-        return dist
-
-    }
-
-    private fun deg2rad( deg : Double) : Double {
-        return deg * Math.PI / 180.0
-    }
-
-    private fun rad2deg(rad : Double) :Double {
-        return (rad * 180.0 / Math.PI);
-    }
-
-
     private fun getCurrentLocation(){
         val locationRequest = LocationRequest.create()?.apply {
-            interval = 600000
+            interval = 60000
             fastestInterval = 5000
             priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         }
