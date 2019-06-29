@@ -23,6 +23,7 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 import android.app.Activity
 import android.content.pm.PackageManager
 import android.support.v4.app.ActivityCompat
+import android.view.View
 
 
 class MainActivity : AppCompatActivity() {
@@ -62,11 +63,6 @@ class MainActivity : AppCompatActivity() {
         }
         startService()
 
-        room3Button.setOnClickListener {
-            Toast.makeText(this@MainActivity, "You clicked me.", Toast.LENGTH_SHORT).show()
-            val intent = Intent(this, Map2Activity::class.java)
-            startActivity(intent);
-        }
     }
 
     private fun buildNav(toolbar:Toolbar,activity: MainActivity) {
@@ -126,7 +122,7 @@ class MainActivity : AppCompatActivity() {
         var serviceIntent  = Intent(this, NotificationService::class.java);
         serviceIntent.putExtra("inputExtra", "Foreground Service Example in Android");
 
-        //ContextCompat.startForegroundService(this, serviceIntent);
+        ContextCompat.startForegroundService(this, serviceIntent);
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {

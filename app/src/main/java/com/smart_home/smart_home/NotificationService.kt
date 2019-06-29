@@ -28,7 +28,8 @@ class NotificationService : Service() {
 
     override fun onCreate() {
         super.onCreate()
-        startForeground(101,NotificationCompat.Builder(this@NotificationService,CHANNEL_ID).build())
+        createNotificationChannel()
+        startForeground(102,NotificationCompat.Builder(this@NotificationService,CHANNEL_ID).build())
         val notificationIntent = Intent(this, MainActivity::class.java)
         val pendingIntent = PendingIntent.getActivity(
             this,
@@ -87,14 +88,16 @@ class NotificationService : Service() {
                     }
                 }else if(it.key == "FaceDetected"){
                     //var requests : DataSnapshot = it.value as (DataSnapshot) )
+                    var reqCode = 1000
+                    var notifId = 100
 
                     it.children.forEach{
                         intentAccept.putExtra("User",it.key.toString())
                         intentReject.putExtra("User",it.key.toString())
 
 
-                        val pIntentR = PendingIntent.getBroadcast(cont,2,intentReject,PendingIntent.FLAG_UPDATE_CURRENT)
-                        val pIntentA = PendingIntent.getBroadcast(cont,1,intentAccept,PendingIntent.FLAG_UPDATE_CURRENT)
+                        val pIntentR = PendingIntent.getBroadcast(cont,reqCode++,intentReject,PendingIntent.FLAG_UPDATE_CURRENT)
+                        val pIntentA = PendingIntent.getBroadcast(cont,reqCode++,intentAccept,PendingIntent.FLAG_UPDATE_CURRENT)
 
                         val reqNotification = NotificationCompat.Builder(this@NotificationService, CHANNEL_ID)
                             .setContentTitle("Request for Permission")
@@ -109,7 +112,7 @@ class NotificationService : Service() {
                         //startForeground(3,reqNotification!!)
                         with(NotificationManagerCompat.from(this@NotificationService)) {
                             // notificationId is a unique int for each notification that you must define
-                            notify(3, reqNotification!!)
+                            notify(notifId++, reqNotification!!)
                         }
                     }
                 }
