@@ -56,7 +56,6 @@ class NotificationService : Service() {
                             .setSmallIcon(R.drawable.ic_adb_user)
                             .setContentIntent(pendingIntent)
                             .setAutoCancel(true)
-                            .setDeleteIntent(pendingIntent)
                             .build()
 
                         //startForeground(1,waterNotification!!)

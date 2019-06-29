@@ -94,7 +94,7 @@
                     android:layout_gravity=""
                     android:background="@android:color/white"
                     android:scaleType="centerInside"
-                    app:srcCompat="@drawable/livingroom"/>
+                    app:srcCompat="@drawable/livingroom" android:clickable="false"/>
 
             <TextView
                     android:id="@+id/livingroomTextView"
@@ -131,7 +131,7 @@
                     android:background="@android:color/white"
                     android:scaleType="centerInside"
 
-                    android:src="@drawable/bathroom"/>
+                    android:src="@drawable/bathroom" android:clickable="false"/>
 
             <TextView
                     android:id="@+id/bathroomTextView"
@@ -169,7 +169,7 @@
                     android:layout_gravity=""
                     android:background="@android:color/white"
                     android:scaleType="centerInside"
-                    app:srcCompat="@drawable/kitchen"/>
+                    app:srcCompat="@drawable/kitchen" android:clickable="false"/>
 
             <TextView
                     android:id="@+id/kitchenTextView"

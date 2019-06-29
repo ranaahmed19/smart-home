@@ -15,15 +15,14 @@ import com.google.firebase.auth.FirebaseAuth
 import com.mikepenz.materialdrawer.AccountHeaderBuilder
 import com.mikepenz.materialdrawer.Drawer
 import com.mikepenz.materialdrawer.DrawerBuilder
-import com.mikepenz.materialdrawer.model.DividerDrawerItem
-import com.mikepenz.materialdrawer.model.PrimaryDrawerItem
-import com.mikepenz.materialdrawer.model.ProfileDrawerItem
-import com.mikepenz.materialdrawer.model.SecondaryDrawerItem
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 import android.app.Activity
 import android.content.pm.PackageManager
 import android.support.v4.app.ActivityCompat
 import android.view.View
+import android.widget.CompoundButton
+import com.mikepenz.materialdrawer.interfaces.OnCheckedChangeListener
+import com.mikepenz.materialdrawer.model.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -71,8 +70,27 @@ class MainActivity : AppCompatActivity() {
         val user = auth!!.currentUser
         val mail = user!!.email
         val item2 = PrimaryDrawerItem().withIdentifier(1).withName("Sign Out").withSetSelected(false)
-        val item3 = PrimaryDrawerItem().withIdentifier(2).withName("Away Mode").withSetSelected(false)
-        val item4 = PrimaryDrawerItem().withIdentifier(3).withName(" turn off Away Mode").withSetSelected(false)
+        val awayMode = SwitchDrawerItem().withIdentifier(2).withSwitchEnabled(true)
+            .withName("Away Mode").withSetSelected(false).withOnCheckedChangeListener(object : OnCheckedChangeListener {
+                override fun onCheckedChanged(
+                    drawerItem: IDrawerItem<*, *>?,
+                    buttonView: CompoundButton?,
+                    isChecked: Boolean
+                ) {
+                    if(isChecked){
+                        if(ContextCompat.checkSelfPermission(this@MainActivity, Manifest.permission.ACCESS_FINE_LOCATION) ==
+                            PackageManager.PERMISSION_GRANTED ){
+                            val intent = Intent(activity,TrackingService::class.java)
+                            startService(intent)
+                        }else ActivityCompat.requestPermissions(this@MainActivity,arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1)
+
+                    }else {
+                        val intent = Intent(activity,TrackingService::class.java)
+                        stopService(intent);
+                    }
+
+                }
+            })
         val headerResult = AccountHeaderBuilder().withActivity(this)
             .addProfiles(
                 ProfileDrawerItem().withIcon(getResources().getDrawable(R.drawable.logo)).withTextColor(Color.BLACK).withEmail(mail).withName("My Home")
@@ -89,8 +107,7 @@ class MainActivity : AppCompatActivity() {
             .withToolbar(toolbar)
             .addDrawerItems(
                 item2,
-                item3,
-                item4
+                awayMode
             )
             .withOnDrawerItemClickListener(object : Drawer.OnDrawerItemClickListener {
                 override fun onItemClick(view: View?, position: Int, drawerItem: IDrawerItem<*,*>): Boolean {
@@ -100,16 +117,7 @@ class MainActivity : AppCompatActivity() {
                         startActivity(intent)
                     }
                     else if (position == 2){
-                        if(ContextCompat.checkSelfPermission(this@MainActivity, Manifest.permission.ACCESS_FINE_LOCATION) ==
-                            PackageManager.PERMISSION_GRANTED ){
-                            val intent = Intent(activity,TrackingService::class.java)
-                            startService(intent)
-                        }else ActivityCompat.requestPermissions(this@MainActivity,arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1)
 
-                    }
-                    else if (position == 3){
-                        val intent = Intent(activity,TrackingService::class.java)
-                        stopService(intent);
                     }
                     return false
                 }

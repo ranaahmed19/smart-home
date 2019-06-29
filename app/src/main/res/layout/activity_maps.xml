@@ -7,4 +7,14 @@
           android:layout_height="match_parent"
           android:id="@+id/map"
           tools:context=".MapsActivity"
-          android:name="com.google.android.gms.maps.SupportMapFragment" tools:layout="@layout/activity_maps"/>
+          android:name="com.google.android.gms.maps.SupportMapFragment" tools:layout="@layout/activity_maps">
+    <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:text="Save Location"
+            android:id="@+id/saveLocation"
+            android:padding="10dp"
+            android:layout_marginTop="20dp"
+            android:paddingRight="10dp"/>
+</fragment>
