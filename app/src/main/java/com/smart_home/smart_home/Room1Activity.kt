@@ -2,7 +2,6 @@ package com.smart_home.smart_home
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.EditText
 import android.widget.TextView
 import android.widget.ToggleButton
 import android.widget.Toast
@@ -12,7 +11,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.ValueEventListener
 
 
-class Room1 : AppCompatActivity() {
+class Room1Activity : AppCompatActivity() {
 
     private var roomsDatabase = FirebaseDatabase.getInstance().getReference("Rooms")
     private var light = roomsDatabase.child("Room1").child("Light")
@@ -37,7 +36,7 @@ class Room1 : AppCompatActivity() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(this@Room1, "failed", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@Room1Activity, "failed", Toast.LENGTH_SHORT).show()
             }
         })
 
@@ -64,7 +63,7 @@ class Room1 : AppCompatActivity() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(this@Room1, "failed", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@Room1Activity, "failed", Toast.LENGTH_SHORT).show()
             }
         })
     }
@@ -73,7 +72,7 @@ class Room1 : AppCompatActivity() {
         val light1TB = findViewById<ToggleButton>(R.id.light1TB)
         light1TB?.setOnCheckedChangeListener { buttonView, isChecked ->
             val msg = "Toggle Button is " + if (isChecked) "ON" else "OFF"
-            Toast.makeText(this@Room1, msg, Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@Room1Activity, msg, Toast.LENGTH_SHORT).show()
             if(isChecked)
                 light.setValue("ON")
             else light.setValue("OFF")
@@ -92,7 +91,7 @@ class Room1 : AppCompatActivity() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(this@Room1, "failed", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@Room1Activity, "failed", Toast.LENGTH_SHORT).show()
             }
         })
     }

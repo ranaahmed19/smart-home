@@ -45,18 +45,18 @@
                 android:label="@string/title_activity_maps">
         </activity>
         <activity
-                android:name=".Room3"
+                android:name=".Room3Activity"
                 android:label="@string/title_activity_room3"
                 android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-                android:name=".Room2"
+                android:name=".Room2Activity"
                 android:label="@string/title_activity_room2"
                 android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity android:name=".Kitchen">
         </activity>
-        <activity android:name=".Room1">
+        <activity android:name=".Room1Activity">
         </activity>
         <activity android:name=".ForgotPasswordActivity">
         </activity>

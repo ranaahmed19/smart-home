@@ -32,7 +32,6 @@ class NotificationService : Service() {
         startForeground(10021,NotificationCompat.Builder(this@NotificationService,CHANNEL_ID).build())
 
         createNotificationChannel()
-        startForeground(102,NotificationCompat.Builder(this@NotificationService,CHANNEL_ID).build())
 
         val notificationIntent = Intent(this, MainActivity::class.java)
         val pendingIntent = PendingIntent.getActivity(
@@ -51,88 +50,90 @@ class NotificationService : Service() {
         reference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 createNotificationChannel()
-            dataSnapshot!!.children.forEach{
-                if(it.key == "Water") {
+                dataSnapshot!!.children.forEach {
+                    if (it.key == "Water") {
 
-                    if (waterReading != it.value) {
-                        val waterNotification = NotificationCompat.Builder(this@NotificationService, CHANNEL_ID)
-                            .setContentTitle("Alert: Water Leakage!!")
-                            .setContentText(it.value.toString())
-                            .setSmallIcon(R.drawable.ic_adb_user)
-                            .setContentIntent(pendingIntent)
-                            .setAutoCancel(true)
-                            .build()
-
-                        //startForeground(1,waterNotification!!)
-                        with(NotificationManagerCompat.from(this@NotificationService)) {
-                            // notificationId is a unique int for each notification that you must define
-                            notify(1, waterNotification!!)
-                        }
-                        waterReading = it.value as (Double)
-                    }
-                }else if(it.key == "Gas"){
-
-                    if(gasReading != it.value){
-
-                        val gasNotification = NotificationCompat.Builder(this@NotificationService, CHANNEL_ID)
-                            .setContentTitle("Alert: Gas Leakage!!")
-                            .setContentText(it.value.toString())
-                            .setSmallIcon(R.drawable.ic_adb_user)
-                            .setContentIntent(pendingIntent)
-                            .setAutoCancel(true)
-                            //.addExtras(it.value.toString())
-                            .build()
-
-                        //startForeground(2,gasNotification!!)
-                        with(NotificationManagerCompat.from(this@NotificationService)) {
-                            // notificationId is a unique int for each notification that you must define
-                            notify(2, gasNotification!!)
-                        }
-                        gasReading = it.value as (Double)
-                    }
-                }else if(it.key == "FaceDetected"){
-                    //var requests : DataSnapshot = it.value as (DataSnapshot) )
-
-                    var notfId = 100
-                    var reqCode = 1000
-                    it.children.forEach{
-
-                        Log.d("Value",it.value.toString())
-
-
-                        if(it.value.toString() == "Request"){
-                            val pIntentR = PendingIntent.getBroadcast(cont,reqCode++,intentReject,PendingIntent.FLAG_UPDATE_CURRENT)
-                            val pIntentA = PendingIntent.getBroadcast(cont,reqCode++,intentAccept,PendingIntent.FLAG_UPDATE_CURRENT)
-
-                            intentAccept.putExtra("User",it.key.toString())
-                            intentReject.putExtra("User",it.key.toString())
-
-
-                            val pIntentR = PendingIntent.getBroadcast(cont,reqCode++,intentReject,PendingIntent.FLAG_UPDATE_CURRENT)
-                            val pIntentA = PendingIntent.getBroadcast(cont,reqCode++,intentAccept,PendingIntent.FLAG_UPDATE_CURRENT)
-
-                            val reqNotification = NotificationCompat.Builder(this@NotificationService, CHANNEL_ID)
-                                .setContentTitle("Request for Permission")
-                                .setContentText(it.key.toString()+" Wants to Enter")
+                        if (waterReading != it.value) {
+                            val waterNotification = NotificationCompat.Builder(this@NotificationService, CHANNEL_ID)
+                                .setContentTitle("Alert: Water Leakage!!")
+                                .setContentText(it.value.toString())
                                 .setSmallIcon(R.drawable.ic_adb_user)
                                 .setContentIntent(pendingIntent)
                                 .setAutoCancel(true)
-                                .addAction(R.drawable.done, "Accept", pIntentA)
-                                .addAction(R.drawable.clear, "Deny", pIntentR)
                                 .build()
 
-                            //startForeground(3,reqNotification!!)
+                            //startForeground(1,waterNotification!!)
                             with(NotificationManagerCompat.from(this@NotificationService)) {
-                            // notificationId is a unique int for each notification that you must define
-                            notify(notifId++, reqNotification!!)
+                                // notificationId is a unique int for each notification that you must define
+                                notify(1, waterNotification!!)
+                            }
+                            waterReading = it.value as (Double)
+                        }
+                    } else if (it.key == "Gas") {
+
+                        if (gasReading != it.value) {
+                            val gasNotification = NotificationCompat.Builder(this@NotificationService, CHANNEL_ID)
+                                .setContentTitle("Alert: Gas Leakage!!")
+                                .setContentText(it.value.toString())
+                                .setSmallIcon(R.drawable.ic_adb_user)
+                                .setContentIntent(pendingIntent)
+                                .setAutoCancel(true)
+                                //.addExtras(it.value.toString())
+                                .build()
+                            //startForeground(2,gasNotification!!)
+                            with(NotificationManagerCompat.from(this@NotificationService)) {
+                                // notificationId is a unique int for each notification that you must define
+                                notify(2, gasNotification!!)
+                            }
+                            gasReading = it.value as (Double)
+                        }
+                    } else if (it.key == "FaceDetected") {
+                        var notifId = 100
+                        var reqCode = 1000
+                        it.children.forEach {
+                            Log.d("Value", it.value.toString())
+                            if (it.value.toString() == "Request") {
+                                val pIntentR = PendingIntent.getBroadcast(
+                                    cont,
+                                    reqCode++,
+                                    intentReject,
+                                    PendingIntent.FLAG_UPDATE_CURRENT
+                                )
+                                val pIntentA = PendingIntent.getBroadcast(
+                                    cont,
+                                    reqCode++,
+                                    intentAccept,
+                                    PendingIntent.FLAG_UPDATE_CURRENT
+                                )
+
+                                intentAccept.putExtra("User", it.key.toString())
+                                intentReject.putExtra("User", it.key.toString())
+
+
+
+
+                                val reqNotification = NotificationCompat.Builder(this@NotificationService, CHANNEL_ID)
+                                    .setContentTitle("Request for Permission")
+                                    .setContentText(it.key.toString() + " Wants to Enter")
+                                    .setSmallIcon(R.drawable.ic_adb_user)
+                                    .setContentIntent(pendingIntent)
+                                    .setAutoCancel(true)
+                                    .addAction(R.drawable.done, "Accept", pIntentA)
+                                    .addAction(R.drawable.clear, "Deny", pIntentR)
+                                    .build()
+
+                                //startForeground(3,reqNotification!!)
+                                with(NotificationManagerCompat.from(this@NotificationService)) {
+                                    // notificationId is a unique int for each notification that you must define
+                                    notify(notifId++, reqNotification!!)
+                                }
+                            }
                         }
                     }
                 }
             }
-            }
-
             override fun onCancelled(error: DatabaseError) {
-                Log.d("cancel","iii")
+                Log.d("cancel", "iii")
 
             }
         })

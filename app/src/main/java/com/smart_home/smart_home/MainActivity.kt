@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.Toolbar
-import android.util.Log
 import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.Toast
@@ -16,7 +15,6 @@ import com.mikepenz.materialdrawer.AccountHeaderBuilder
 import com.mikepenz.materialdrawer.Drawer
 import com.mikepenz.materialdrawer.DrawerBuilder
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
-import android.app.Activity
 import android.content.pm.PackageManager
 import android.support.v4.app.ActivityCompat
 import android.view.View
@@ -45,7 +43,7 @@ class MainActivity : AppCompatActivity() {
         room1Button.setOnClickListener {
             // your code to perform when the user clicks on the button
             Toast.makeText(this@MainActivity, "You clicked me.", Toast.LENGTH_SHORT).show()
-            val intent = Intent(this, Room1::class.java)
+            val intent = Intent(this, Room1Activity::class.java)
             startActivity(intent);
         }
 
