@@ -21,15 +21,19 @@ class NotificationService : Service() {
     val CHANNEL_ID = "ForegroundServiceChannel"
 
     private var db1 = FirebaseDatabase.getInstance()//.getReference("Notifications")
-
     private var reference = db1.getReference("Notifications")
+
     private var waterReading : Double = 0.0
     private var gasReading : Double = 0.0
 
     override fun onCreate() {
         super.onCreate()
+
+        startForeground(10021,NotificationCompat.Builder(this@NotificationService,CHANNEL_ID).build())
+
         createNotificationChannel()
         startForeground(102,NotificationCompat.Builder(this@NotificationService,CHANNEL_ID).build())
+
         val notificationIntent = Intent(this, MainActivity::class.java)
         val pendingIntent = PendingIntent.getActivity(
             this,
@@ -46,6 +50,7 @@ class NotificationService : Service() {
 
         reference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
+                createNotificationChannel()
             dataSnapshot!!.children.forEach{
                 if(it.key == "Water") {
 
@@ -88,29 +93,37 @@ class NotificationService : Service() {
                     }
                 }else if(it.key == "FaceDetected"){
                     //var requests : DataSnapshot = it.value as (DataSnapshot) )
+
+                    var notfId = 100
                     var reqCode = 1000
-                    var notifId = 100
-
                     it.children.forEach{
-                        intentAccept.putExtra("User",it.key.toString())
-                        intentReject.putExtra("User",it.key.toString())
+
+                        Log.d("Value",it.value.toString())
 
 
-                        val pIntentR = PendingIntent.getBroadcast(cont,reqCode++,intentReject,PendingIntent.FLAG_UPDATE_CURRENT)
-                        val pIntentA = PendingIntent.getBroadcast(cont,reqCode++,intentAccept,PendingIntent.FLAG_UPDATE_CURRENT)
+                        if(it.value.toString() == "Request"){
+                            val pIntentR = PendingIntent.getBroadcast(cont,reqCode++,intentReject,PendingIntent.FLAG_UPDATE_CURRENT)
+                            val pIntentA = PendingIntent.getBroadcast(cont,reqCode++,intentAccept,PendingIntent.FLAG_UPDATE_CURRENT)
 
-                        val reqNotification = NotificationCompat.Builder(this@NotificationService, CHANNEL_ID)
-                            .setContentTitle("Request for Permission")
-                            .setContentText(it.key.toString()+" Wants to Enter")
-                            .setSmallIcon(R.drawable.ic_adb_user)
-                            .setContentIntent(pendingIntent)
-                            .setAutoCancel(true)
-                            .addAction(R.drawable.done, "Accept", pIntentA)
-                            .addAction(R.drawable.clear, "Deny", pIntentR)
-                            .build()
+                            intentAccept.putExtra("User",it.key.toString())
+                            intentReject.putExtra("User",it.key.toString())
 
-                        //startForeground(3,reqNotification!!)
-                        with(NotificationManagerCompat.from(this@NotificationService)) {
+
+                            val pIntentR = PendingIntent.getBroadcast(cont,reqCode++,intentReject,PendingIntent.FLAG_UPDATE_CURRENT)
+                            val pIntentA = PendingIntent.getBroadcast(cont,reqCode++,intentAccept,PendingIntent.FLAG_UPDATE_CURRENT)
+
+                            val reqNotification = NotificationCompat.Builder(this@NotificationService, CHANNEL_ID)
+                                .setContentTitle("Request for Permission")
+                                .setContentText(it.key.toString()+" Wants to Enter")
+                                .setSmallIcon(R.drawable.ic_adb_user)
+                                .setContentIntent(pendingIntent)
+                                .setAutoCancel(true)
+                                .addAction(R.drawable.done, "Accept", pIntentA)
+                                .addAction(R.drawable.clear, "Deny", pIntentR)
+                                .build()
+
+                            //startForeground(3,reqNotification!!)
+                            with(NotificationManagerCompat.from(this@NotificationService)) {
                             // notificationId is a unique int for each notification that you must define
                             notify(notifId++, reqNotification!!)
                         }

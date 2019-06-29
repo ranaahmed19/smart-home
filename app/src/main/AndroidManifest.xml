@@ -78,7 +78,6 @@
                 android:name=".NotificationService"
                 android:enabled="true"
                 android:exported="true"/>
-
         <receiver android:name=".ActionReceiver" />
     </application>
 </manifest>
