@@ -26,7 +26,9 @@ class TrackingService : Service() {
 
     private var usersDatabase = FirebaseDatabase.getInstance().getReference("Users")
     private var roomsDatabase = FirebaseDatabase.getInstance().getReference("Rooms")
-    private var light = roomsDatabase.child("Room1").child("Light")
+    private var lightRoom1 = roomsDatabase.child("Room1").child("Light")
+    private var lightRoom2 = roomsDatabase.child("Room2").child("Light")
+    private var lightRoom3 = roomsDatabase.child("Room3").child("Light")
     private var lat : Double = 0.0
     private var long : Double = 0.0
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -52,9 +54,13 @@ class TrackingService : Service() {
                         var currentDistance = distanceBetween(fixedLatlng,currentLatlng)
                         Log.d("distance1",currentDistance.toString())
                         if(currentDistance!! > minDistance){
-                           light.setValue("OFF")
+                            lightRoom1.setValue("OFF")
+                            lightRoom2.setValue("OFF")
+                            lightRoom3.setValue("OFF")
                         }else {
-                           light.setValue("ON")
+                            lightRoom1.setValue("ON")
+                            lightRoom2.setValue("ON")
+                            lightRoom3.setValue("ON")
                         }
                     }
                 }
