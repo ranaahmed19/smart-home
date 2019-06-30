@@ -1,13 +1,11 @@
 package com.smart_home.smart_home
 
-import android.Manifest
+
 import android.app.Service
-import android.content.ContentValues.TAG
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.LocationManager
 import android.os.IBinder
-import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
@@ -35,8 +33,6 @@ class TrackingService : Service() {
     private var locationManager : LocationManager? = null
     private lateinit var locationCallback: LocationCallback
     private val minDistance : Double = 100.0
-    private var status : String = "Near"
-
 
     override fun onBind(intent: Intent): IBinder {
         TODO("Return the communication channel to the service.")
@@ -70,7 +66,7 @@ class TrackingService : Service() {
 
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
-        val currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
+        val currentFirebaseUser = FirebaseAuth.getInstance().currentUser ;
         getUserFixedLocation(currentFirebaseUser!!.uid)
         getCurrentLocation()
         Toast.makeText(this, "Invoke background service onStartCommand method.", Toast.LENGTH_LONG).show()
@@ -114,7 +110,7 @@ class TrackingService : Service() {
         val userLong = user.child("Longitude")
         userLat.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                lat = dataSnapshot.getValue() as (Double)
+                lat = dataSnapshot.value as (Double)
                 Log.d("latlong",lat.toString())
             }
             override fun onCancelled(error: DatabaseError) {
@@ -123,7 +119,7 @@ class TrackingService : Service() {
         })
         userLong.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                long = dataSnapshot.getValue() as (Double)
+                long = dataSnapshot.value as (Double)
                 Log.d("latlong",long.toString())
             }
             override fun onCancelled(error: DatabaseError) {
