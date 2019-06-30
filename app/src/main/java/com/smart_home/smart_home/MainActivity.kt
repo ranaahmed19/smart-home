@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity() {
 
         room2Button.setOnClickListener { // used as a log out button until we make a log out button
             //FirebaseAuth.getInstance().signOut()
-            val intent = Intent(this, Room2Activitygit ::class.java)
+            val intent = Intent(this,Room2Activity ::class.java)
             startActivity(intent)
         }
         bathroomButton.setOnClickListener { // used as a log out button until we make a log out button
