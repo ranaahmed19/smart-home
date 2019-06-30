@@ -10,7 +10,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
-class Room2 : AppCompatActivity() {
+class Room2Activity : AppCompatActivity() {
 
     private var roomsDatabase = FirebaseDatabase.getInstance().getReference("Rooms").child("Room2")
     private var light = roomsDatabase.child("Light")
@@ -36,7 +36,7 @@ class Room2 : AppCompatActivity() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(this@Room2, "failed", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@Room2Activity, "failed", Toast.LENGTH_SHORT).show()
             }
         })
 
@@ -63,7 +63,7 @@ class Room2 : AppCompatActivity() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(this@Room2, "failed", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@Room2Activity, "failed", Toast.LENGTH_SHORT).show()
             }
         })
     }
@@ -72,7 +72,7 @@ class Room2 : AppCompatActivity() {
         val light1TB = findViewById<ToggleButton>(R.id.light1TB)
         light1TB?.setOnCheckedChangeListener { buttonView, isChecked ->
             val msg = "Toggle Button is " + if (isChecked) "ON" else "OFF"
-            Toast.makeText(this@Room2, msg, Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@Room2Activity, msg, Toast.LENGTH_SHORT).show()
             if(isChecked)
                 light.setValue("ON")
             else light.setValue("OFF")
@@ -91,7 +91,7 @@ class Room2 : AppCompatActivity() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(this@Room2, "failed", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@Room2Activity, "failed", Toast.LENGTH_SHORT).show()
             }
         })
     }
