@@ -1,18 +1,15 @@
 package com.smart_home.smart_home
 
-import android.app.ProgressDialog
-import android.content.Intent;
-import android.os.Bundle;
+import android.content.Intent
+import android.os.Bundle
 
-import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
-import android.util.Log
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
+import android.support.v7.app.AppCompatActivity
+import android.text.TextUtils
+import android.view.View
+import android.widget.Button
+import android.widget.EditText
 
-import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
@@ -33,7 +30,6 @@ class SignupActivity : AppCompatActivity() {
 
     private var btnSignIn: Button? = null
     private var btnSignUp: Button? = null
-    private var progressBar: ProgressDialog? = null
 
     private var auth: FirebaseAuth? = null
     private var mDatabaseReference: DatabaseReference? = null
@@ -50,7 +46,6 @@ class SignupActivity : AppCompatActivity() {
         inputPassword =  findViewById<View>(R.id.password) as EditText
         btnSignIn =  findViewById<View>(R.id.sign_in_button) as Button
         btnSignUp =  findViewById<View>(R.id.sign_up_button) as Button
-        progressBar =  ProgressDialog(this)
         mDatabase = FirebaseDatabase.getInstance()
         mDatabaseReference = mDatabase!!.reference!!.child("Users")
         auth = FirebaseAuth.getInstance()
@@ -71,58 +66,34 @@ class SignupActivity : AppCompatActivity() {
 
         if (!TextUtils.isEmpty(firstName) && !TextUtils.isEmpty(lastName)
             && !TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
-            Toast.makeText(this,"Fill In the Data",Toast.LENGTH_SHORT).show()
-        } else {
-            Toast.makeText(this, "Enter all details", Toast.LENGTH_SHORT).show()
         }
-
-        progressBar!!.setMessage("Registering User")
-        progressBar!!.show()
 
         auth!!
             .createUserWithEmailAndPassword(email!!, password!!)
             .addOnCompleteListener(this) { task ->
-                progressBar!!.hide()
                 if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
-                    Log.d(TAG, "createUserWithEmail:success")
                     val userId = auth!!.currentUser!!.uid
-                    //Verify Email
-                    verifyEmail();
-                    //update user profile information
+                    verifyEmail()
                     val currentUserDb = mDatabaseReference!!.child(userId)
                     currentUserDb.child("firstName").setValue(firstName)
                     currentUserDb.child("lastName").setValue(lastName)
                     updateUserInfoAndUI()
-                } else {
-                    // If sign in fails, display a message to the user.
-                    Log.w(TAG, "createUserWithEmail:failure", task.exception)
-                    Toast.makeText(this@SignupActivity, "Authentication failed.",
-                        Toast.LENGTH_SHORT).show()
                 }
             }
     }
 
     private fun updateUserInfoAndUI() {
-        //start next activity
         val intent = Intent(this@SignupActivity, MapsActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(intent)
     }
 
     private fun verifyEmail() {
-        val mUser = auth!!.currentUser;
+        val mUser = auth!!.currentUser
         mUser!!.sendEmailVerification()
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    Toast.makeText(this@SignupActivity,
-                        "Verification email sent to " + mUser.getEmail(),
-                        Toast.LENGTH_SHORT).show()
-                } else {
-                    Log.e(TAG, "sendEmailVerification", task.exception)
-                    Toast.makeText(this@SignupActivity,
-                        "Failed to send verification email.",
-                        Toast.LENGTH_SHORT).show()
+
                 }
             }
     }

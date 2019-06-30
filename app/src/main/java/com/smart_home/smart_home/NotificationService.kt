@@ -4,12 +4,10 @@ import android.app.*
 import android.content.Context
 import android.os.Build
 import android.content.Intent
-import android.os.Bundle
 import android.os.IBinder
 import android.support.annotation.Nullable
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
-import android.util.Log
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -20,7 +18,7 @@ class NotificationService : Service() {
 
     val CHANNEL_ID = "ForegroundServiceChannel"
 
-    private var db1 = FirebaseDatabase.getInstance()//.getReference("Notifications")
+    private var db1 = FirebaseDatabase.getInstance()
     private var reference = db1.getReference("Notifications")
 
     private var waterReading : Double = 0.0
@@ -62,9 +60,7 @@ class NotificationService : Service() {
                                 .setAutoCancel(true)
                                 .build()
 
-                            //startForeground(1,waterNotification!!)
                             with(NotificationManagerCompat.from(this@NotificationService)) {
-                                // notificationId is a unique int for each notification that you must define
                                 notify(1, waterNotification!!)
                             }
                             waterReading = it.value as (Double)
@@ -78,11 +74,8 @@ class NotificationService : Service() {
                                 .setSmallIcon(R.drawable.ic_adb_user)
                                 .setContentIntent(pendingIntent)
                                 .setAutoCancel(true)
-                                //.addExtras(it.value.toString())
                                 .build()
-                            //startForeground(2,gasNotification!!)
                             with(NotificationManagerCompat.from(this@NotificationService)) {
-                                // notificationId is a unique int for each notification that you must define
                                 notify(2, gasNotification!!)
                             }
                             gasReading = it.value as (Double)
@@ -91,7 +84,6 @@ class NotificationService : Service() {
                         var notifId = 100
                         var reqCode = 1000
                         it.children.forEach {
-                            Log.d("Value", it.value.toString())
                             if (it.value.toString() == "Request") {
                                 val pIntentR = PendingIntent.getBroadcast(
                                     cont,
@@ -119,9 +111,7 @@ class NotificationService : Service() {
                                     .addAction(R.drawable.clear, "Deny", pIntentR)
                                     .build()
 
-                                //startForeground(3,reqNotification!!)
                                 with(NotificationManagerCompat.from(this@NotificationService)) {
-                                    // notificationId is a unique int for each notification that you must define
                                     notify(notifId++, reqNotification!!)
                                 }
                             }
@@ -130,8 +120,6 @@ class NotificationService : Service() {
                 }
             }
             override fun onCancelled(error: DatabaseError) {
-                Log.d("cancel", "iii")
-
             }
         })
     }

@@ -3,7 +3,6 @@ package com.smart_home.smart_home
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
-import android.widget.Toast
 import android.widget.ToggleButton
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -36,7 +35,6 @@ class Room2Activity : AppCompatActivity() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(this@Room2Activity, "failed", Toast.LENGTH_SHORT).show()
             }
         })
 
@@ -63,7 +61,6 @@ class Room2Activity : AppCompatActivity() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(this@Room2Activity, "failed", Toast.LENGTH_SHORT).show()
             }
         })
     }
@@ -72,7 +69,6 @@ class Room2Activity : AppCompatActivity() {
         val light1TB = findViewById<ToggleButton>(R.id.light1TB)
         light1TB?.setOnCheckedChangeListener { buttonView, isChecked ->
             val msg = "Toggle Button is " + if (isChecked) "ON" else "OFF"
-            Toast.makeText(this@Room2Activity, msg, Toast.LENGTH_SHORT).show()
             if(isChecked)
                 light.setValue("ON")
             else light.setValue("OFF")
@@ -91,7 +87,6 @@ class Room2Activity : AppCompatActivity() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(this@Room2Activity, "failed", Toast.LENGTH_SHORT).show()
             }
         })
     }

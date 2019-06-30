@@ -9,7 +9,6 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.widget.Toolbar
 import android.widget.Button
 import android.widget.FrameLayout
-import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.mikepenz.materialdrawer.AccountHeaderBuilder
 import com.mikepenz.materialdrawer.Drawer
@@ -40,27 +39,21 @@ class MainActivity : AppCompatActivity() {
         var kitchenButton = findViewById<Button>(R.id.kitchenLayout) as FrameLayout
         var bathroomButton = findViewById<Button>(R.id.bathroomLayout) as FrameLayout
         val user = FirebaseAuth.getInstance().currentUser
-        Toast.makeText(this@MainActivity, "You clicked me."+user!!.email, Toast.LENGTH_LONG).show()
         room1Button.setOnClickListener {
-            // your code to perform when the user clicks on the button
-            Toast.makeText(this@MainActivity, "You clicked me.", Toast.LENGTH_SHORT).show()
             val intent = Intent(this, Room1Activity::class.java)
-            startActivity(intent);
+            startActivity(intent)
         }
 
         kitchenButton.setOnClickListener {
-            Toast.makeText(this@MainActivity, "You clicked me.", Toast.LENGTH_SHORT).show()
             val intent = Intent(this, Kitchen::class.java)
-            startActivity(intent);
+            startActivity(intent)
         }
 
-        room2Button.setOnClickListener { // used as a log out button until we make a log out button
-            //FirebaseAuth.getInstance().signOut()
+        room2Button.setOnClickListener {
             val intent = Intent(this,Room2Activity ::class.java)
             startActivity(intent)
         }
-        bathroomButton.setOnClickListener { // used as a log out button until we make a log out button
-
+        bathroomButton.setOnClickListener {
             val intent = Intent(this, Bathroom::class.java)
             startActivity(intent)
         }
@@ -69,7 +62,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun buildNav(toolbar:Toolbar,activity: MainActivity) {
-        //if you want to update the items at a later time it is recommended to keep it in a variable
         auth = FirebaseAuth.getInstance()
         val user = auth!!.currentUser
         val mail = user!!.email
@@ -90,7 +82,7 @@ class MainActivity : AppCompatActivity() {
 
                     }else {
                         val intent = Intent(activity,TrackingService::class.java)
-                        stopService(intent);
+                        stopService(intent)
                     }
 
                 }
@@ -101,7 +93,6 @@ class MainActivity : AppCompatActivity() {
             )
             .build()
 
-//create the drawer and remember the `Drawer` result object
         val result = DrawerBuilder()
             .withActionBarDrawerToggleAnimated (true)
             .withTranslucentStatusBar(true)
@@ -131,26 +122,22 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun startService() {
-        var serviceIntent  = Intent(this, NotificationService::class.java);
-        serviceIntent.putExtra("inputExtra", "Foreground Service Example in Android");
+        var serviceIntent  = Intent(this, NotificationService::class.java)
+        serviceIntent.putExtra("inputExtra", "Foreground Service Example in Android")
 
-        ContextCompat.startForegroundService(this, serviceIntent);
+        ContextCompat.startForegroundService(this, serviceIntent)
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         when (requestCode) {
             1 -> {
-                // If request is cancelled, the result arrays are empty.
                 if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     val intent = Intent(this,TrackingService::class.java)
                     startService(intent)
-                } else {
-                    Toast.makeText(this@MainActivity, "Please grant location permission to start Away mode ", Toast.LENGTH_SHORT).show()
                 }
                 return
             }
-        }// other 'case' lines to check for other
-        // permissions this app might request
+        }
     }
 
 }
