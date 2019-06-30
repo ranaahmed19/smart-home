@@ -29,6 +29,9 @@ import android.util.Log
 import android.widget.TextView
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.OnFailureListener
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 
@@ -66,6 +69,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             else{
                 if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) ==
                     PackageManager.PERMISSION_GRANTED &&locationManager!!.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+
                     updateLocationUI()
                 }else Toast.makeText(
                     applicationContext, "Permission denied or GPS is turned off",
@@ -96,15 +100,18 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             1 -> {
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    getDeviceLocation()
+                    updateLocationUI()
                 } else {
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
+                    Toast.makeText(
+                        applicationContext,
+                        "Location permission is needed"
+                        ,
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
                 return
             }
-        }// other 'case' lines to check for other
-        // permissions this app might request
+        }
     }
 
 
@@ -113,18 +120,23 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             return
         }
         try {
-            if (locationManager!!.isProviderEnabled(LocationManager.GPS_PROVIDER)){
-                if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) ==
-                    PackageManager.PERMISSION_GRANTED ){
+            if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=
+                PackageManager.PERMISSION_GRANTED ){
+                ActivityCompat.requestPermissions(this,arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1);
+            }else{
+                if (locationManager!!.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+
                     mMap.isMyLocationEnabled = true
                     mMap.uiSettings.isMapToolbarEnabled = true
                     getDeviceLocation()
-                }else ActivityCompat.requestPermissions(this,arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1);
-            } else {
-                showSettingsAlert()
-                Log.i("Exception: %s","get perm")
 
+                } else {
+                    showSettingsAlert()
+                    Log.i("Exception: %s","get perm")
+
+                }
             }
+
         } catch (e: SecurityException) {
             Log.e("Exception: %s", e.message)
         }
@@ -144,6 +156,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 val locationResult = fusedLocationClient.lastLocation
                 Log.d("inside","locationRes0")
                 locationResult.addOnSuccessListener { location : Location? ->
+                    if(location == null){
+                        Toast.makeText(
+                            applicationContext,
+                            "Location isn't available right now. Try again in a few seconds",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }else {
                     val Here = LatLng(location!!.latitude,
                         location!!.longitude)
                     Log.d("inside2323",Here.toString())
@@ -162,7 +181,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     ).show()
                     latitude = location!!.latitude
                     longitude = location!!.longitude
-                }
+                }}
                 locationResult.addOnFailureListener {
                     Log.e("Exception: %s", "eeeee")
                 }          }
