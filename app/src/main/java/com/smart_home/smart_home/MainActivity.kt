@@ -40,13 +40,14 @@ class MainActivity : AppCompatActivity() {
         var room1Button = findViewById<Button>(R.id.room1BT) as FrameLayout
         var room2Button = findViewById<Button>(R.id.room2BT) as FrameLayout
         var kitchenButton = findViewById<Button>(R.id.kitchenLayout) as FrameLayout
+        var bathroomButton = findViewById<Button>(R.id.bathroomLayout) as FrameLayout
         val user = FirebaseAuth.getInstance().currentUser
         Toast.makeText(this@MainActivity, "You clicked me."+user!!.email, Toast.LENGTH_LONG).show()
         room1Button.setOnClickListener {
             // your code to perform when the user clicks on the button
             Toast.makeText(this@MainActivity, "You clicked me.", Toast.LENGTH_SHORT).show()
             val intent = Intent(this, Room1::class.java)
-            startActivity(intent);
+            startActivity(intent)
         }
 
         kitchenButton.setOnClickListener {
@@ -56,9 +57,14 @@ class MainActivity : AppCompatActivity() {
         }
 
         room2Button.setOnClickListener { // used as a log out button until we make a log out button
-            FirebaseAuth.getInstance().signOut()
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent);
+            //FirebaseAuth.getInstance().signOut()
+            val intent = Intent(this, Room2::class.java)
+            startActivity(intent)
+        }
+        bathroomButton.setOnClickListener { // used as a log out button until we make a log out button
+
+            val intent = Intent(this, Bathroom::class.java)
+            startActivity(intent)
         }
         startService()
 

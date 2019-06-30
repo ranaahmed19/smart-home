@@ -7,4 +7,201 @@
         android:layout_height="match_parent"
         tools:context=".Room2">
 
+        <ImageButton
+            android:id="@+id/curtainsButton4"
+            android:layout_width="162dp"
+            android:layout_height="120dp"
+            android:layout_gravity=""
+            android:background="@android:color/white"
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/temprature"
+            android:layout_marginEnd="28dp"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginRight="28dp" android:layout_marginTop="250dp"
+            app:layout_constraintTop_toBottomOf="@+id/myHome"/>
+        <TextView
+            android:id="@+id/kitchenTextView5"
+            android:layout_width="162dp"
+            android:layout_height="41dp"
+            android:layout_gravity="bottom"
+            android:background="@android:color/white"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:text="Temprature"
+            android:textColor="@android:color/black"
+            app:fontFamily="@font/roboto"
+            android:layout_marginEnd="28dp"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginRight="28dp"
+            app:layout_constraintTop_toBottomOf="@+id/curtainsButton4"/>
+        <ImageButton
+            android:id="@+id/curtainsButton2"
+            android:layout_width="162dp"
+            android:layout_height="120dp"
+            android:layout_gravity=""
+            android:background="@android:color/white"
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/airconditioning"
+            android:layout_marginTop="250dp"
+            app:layout_constraintTop_toBottomOf="@+id/myHome" android:layout_marginStart="28dp"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="28dp"/>
+        <TextView
+            android:id="@+id/kitchenTextView3"
+            android:layout_width="162dp"
+            android:layout_height="41dp"
+            android:layout_gravity="bottom"
+            android:background="@android:color/white"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:text="AC"
+            android:textColor="@android:color/black"
+            app:fontFamily="@font/roboto"
+            app:layout_constraintTop_toBottomOf="@+id/curtainsButton2"
+            android:layout_marginStart="28dp" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginLeft="28dp"/>
+        <ImageButton
+            android:id="@+id/curtainsButton"
+            android:layout_width="162dp"
+            android:layout_height="120dp"
+            android:layout_gravity=""
+            android:background="@android:color/white"
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/curtains"
+            android:layout_marginTop="12dp"
+            app:layout_constraintTop_toBottomOf="@+id/myHome" android:layout_marginEnd="28dp"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginRight="28dp"/>
+        <TextView
+            android:id="@+id/kitchenTextView2"
+            android:layout_width="162dp"
+            android:layout_height="41dp"
+            android:layout_gravity="bottom"
+            android:background="@android:color/white"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:text="Curtains"
+            android:textColor="@android:color/black"
+            app:fontFamily="@font/roboto"
+            app:layout_constraintTop_toBottomOf="@+id/curtainsButton" android:layout_marginEnd="28dp"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginRight="28dp"/>
+        <TextView
+            android:id="@+id/lightningTextView2"
+            android:layout_width="162dp"
+            android:layout_height="41dp"
+            android:layout_gravity="bottom"
+            android:background="@android:color/white"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:text="Lightning"
+            android:textColor="@android:color/black"
+            app:fontFamily="@font/roboto"
+            app:layout_constraintTop_toBottomOf="@+id/lightningButton"
+            android:layout_marginStart="28dp" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginLeft="28dp"/>
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/lightningButton"
+            android:layout_width="162dp"
+            android:layout_height="120dp"
+            android:layout_gravity=""
+            android:background="@android:color/white"
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/lightning"
+            android:layout_marginTop="12dp"
+            app:layout_constraintTop_toBottomOf="@+id/myHome" android:layout_marginStart="28dp"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="28dp"/>
+        <ToggleButton
+            android:layout_width="131dp"
+            android:layout_height="28dp"
+            android:id="@+id/light1TB"
+            android:background="#F4F5F7" android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/lightningTextView2" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginLeft="44dp" android:layout_marginStart="44dp"/>
+
+        <FrameLayout
+            android:id="@+id/room1TV"
+            android:layout_width="175dp"
+            android:layout_height="138dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                    android:id="@+id/circleView"
+                    android:layout_width="175dp"
+                    android:layout_height="119dp"
+                    app:srcCompat="@drawable/circle"
+                    tools:layout_editor_absoluteX="107dp"
+                    tools:layout_editor_absoluteY="0dp"/>
+
+        </FrameLayout>
+
+    <FrameLayout
+            android:layout_width="83dp"
+            android:layout_height="83dp"
+            app:layout_constraintBottom_toBottomOf="@+id/room1TV"
+            app:layout_constraintEnd_toEndOf="@+id/room1TV"
+            app:layout_constraintStart_toStartOf="@+id/room1TV"
+            app:layout_constraintTop_toTopOf="@+id/room1TV" android:id="@+id/frameLayout">
+
+        <ImageView
+                android:id="@+id/iconView"
+                android:layout_width="83dp"
+                android:layout_height="84dp"
+                app:srcCompat="@drawable/livingroom"
+                tools:layout_editor_absoluteX="154dp"
+                tools:layout_editor_absoluteY="26dp"/>
+    </FrameLayout>
+
+    <TextView
+            android:id="@+id/myHome"
+            android:layout_width="149dp"
+            android:layout_height="37dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="7dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:text="Living Room"
+            android:textColor="@android:color/black"
+            android:textSize="23sp"
+            app:fontFamily="@font/roboto_bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/room1TV"/>
+
+        <ToggleButton
+            android:text="ToggleButton"
+            android:layout_width="131dp"
+            android:layout_height="28dp"
+            android:id="@+id/curtains1TB"
+            android:textOff="Closed" android:textOn="Opened" android:background="#F4F5F7"
+            android:layout_marginEnd="44dp"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginRight="44dp" android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/kitchenTextView2"/>
+        <ToggleButton
+            android:text="ToggleButton"
+            android:layout_width="131dp"
+            android:layout_height="28dp"
+            android:id="@+id/AC1TB"
+            android:layout_marginStart="44dp" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginLeft="44dp"
+            android:background="#F4F5F7" android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/kitchenTextView3"/>
+        <TextView
+            android:layout_width="131dp"
+            android:layout_height="28dp"
+            android:inputType="text"
+            android:ems="10"
+            android:id="@+id/readTemperature1TV"
+            style="@android:style/Widget.DeviceDefault.Light.TextView"
+            android:gravity="center" android:textSize="20sp" android:textStyle="bold" android:background="#F4F5F7"
+            android:text="31 " android:layout_marginEnd="44dp"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginRight="44dp"
+            android:layout_marginTop="16dp" app:layout_constraintTop_toBottomOf="@+id/kitchenTextView5"/>
 </android.support.constraint.ConstraintLayout>
