@@ -76,11 +76,14 @@ class TrackingService : Service() {
         getUserFixedLocation(currentFirebaseUser!!.uid)
         getCurrentLocation()
         Toast.makeText(this, "Invoke background service onStartCommand method.", Toast.LENGTH_LONG).show()
-        return super.onStartCommand(intent, flags, startId)
+        isServiceRunning = true
+        return START_STICKY
     }
 
     override fun onDestroy() {
         super.onDestroy()
+        isServiceRunning = false
+        Log.d("tracking","service destroyed")
         Toast.makeText(this, "Invoke background service onDestroy method.", Toast.LENGTH_LONG).show()
     }
 
@@ -93,7 +96,7 @@ class TrackingService : Service() {
 
     private fun getCurrentLocation(){
         val locationRequest = LocationRequest.create()?.apply {
-            interval = 60000
+            interval = 6000
             fastestInterval = 5000
             priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         }
@@ -112,9 +115,11 @@ class TrackingService : Service() {
     private fun getUserFixedLocation(ID : String) {
 
         val user = usersDatabase.child(ID)
+        
         val userLat = user.child("Latitude")
         val userLong = user.child("Longitude")
         userLat.addValueEventListener(object : ValueEventListener {
+
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 lat = dataSnapshot.value as (Double)
                 Log.d("latlong",lat.toString())
@@ -134,5 +139,8 @@ class TrackingService : Service() {
         })
 
 
+    }
+    companion object {
+        var isServiceRunning = false
     }
 }
