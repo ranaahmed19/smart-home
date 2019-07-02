@@ -181,14 +181,11 @@ class MainActivity : AppCompatActivity() {
                 }else {Toast.makeText(this, "Update home location first", Toast.LENGTH_LONG).show()
                     buttonView?.isChecked = false
                 }
-
             }else ActivityCompat.requestPermissions(this@MainActivity,arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1)
-
         }else {
             val intent = Intent(this,TrackingService::class.java)
             stopService(intent)
         }
-
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {

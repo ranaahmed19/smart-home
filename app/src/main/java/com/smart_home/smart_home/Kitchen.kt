@@ -3,6 +3,7 @@ package com.smart_home.smart_home
 import android.graphics.Color.rgb
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
@@ -24,7 +25,10 @@ class Kitchen : AppCompatActivity() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 var foodTableContent : HashMap<String,String> = dataSnapshot.getValue() as (HashMap<String, String>)
                 if (table.childCount >1)
-                    table.removeViews(1,table.childCount)
+                {
+                    Log.d("count",table.childCount.toString())
+                    table.removeViews(1,table.childCount-1)
+                }
                 if( foodTableContent!!.size>0)
                 for ((key, value) in foodTableContent!!) {
                     val row = TableRow(this@Kitchen)
