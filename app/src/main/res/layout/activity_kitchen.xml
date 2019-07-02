@@ -13,10 +13,9 @@
 
         <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
                      android:id="@+id/foodTable"
-                     app:layout_constraintTop_toBottomOf="@+id/foodTextView"
                      android:layout_width="match_parent"
                      android:layout_height="match_parent"
-                     android:layout_marginTop="10dp"
+                     android:layout_marginTop="50dp"
                      android:paddingLeft="10dp"
                      android:paddingRight="10dp"
                      android:shrinkColumns="*"

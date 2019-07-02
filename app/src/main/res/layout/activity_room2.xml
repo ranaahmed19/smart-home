@@ -40,7 +40,7 @@
             android:layout_gravity=""
             android:background="@android:color/white"
             android:scaleType="centerInside"
-            app:srcCompat="@drawable/airconditioning"
+            app:srcCompat="@drawable/humidity"
             android:layout_marginTop="250dp"
             app:layout_constraintTop_toBottomOf="@+id/myHome" android:layout_marginStart="28dp"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="28dp"/>
@@ -53,7 +53,7 @@
             android:clickable="true"
             android:focusable="true"
             android:gravity="center"
-            android:text="AC"
+            android:text="Humidity"
             android:textColor="@android:color/black"
             app:fontFamily="@font/roboto"
             app:layout_constraintTop_toBottomOf="@+id/curtainsButton2"
@@ -184,15 +184,18 @@
             android:layout_marginEnd="44dp"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginRight="44dp" android:layout_marginTop="16dp"
             app:layout_constraintTop_toBottomOf="@+id/kitchenTextView2"/>
-        <ToggleButton
-            android:text="ToggleButton"
+    <TextView
             android:layout_width="131dp"
             android:layout_height="28dp"
-            android:id="@+id/AC1TB"
+            android:id="@+id/humidity1TB"
+            android:inputType="text"
+            android:ems="10"
+            style="@android:style/Widget.DeviceDefault.Light.TextView"
             android:layout_marginStart="44dp" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginLeft="44dp"
-            android:background="#F4F5F7" android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@+id/kitchenTextView3"/>
+            android:layout_marginTop="16dp"
+            android:gravity="center" android:textSize="20sp" android:textStyle="bold" android:background="#F4F5F7"
+            app:layout_constraintTop_toBottomOf="@+id/kitchenTextView3" android:text="20"/>
         <TextView
             android:layout_width="131dp"
             android:layout_height="28dp"

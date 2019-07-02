@@ -16,6 +16,7 @@ class Room1Activity : AppCompatActivity() {
     private var light = roomsDatabase.child("Room1").child("Light")
     private var curtains = roomsDatabase.child("Room1").child("Curtains")
     private var temperature = roomsDatabase.child("Room1").child("Temperature")
+    private var humidity = roomsDatabase.child("Room1").child("Humidity")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_room1)
@@ -24,6 +25,20 @@ class Room1Activity : AppCompatActivity() {
         controlLight()
         controlCurtains()
         controlTemperature()
+        controlHumidity()
+    }
+    private fun controlHumidity(){
+        val humidity1ET = findViewById<TextView>(R.id.humidity1TB)
+        humidity.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val value = dataSnapshot.getValue(Double::class.java)
+                humidity1ET.setText(value!!.toString())
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+            }
+        })
+
     }
 
     private fun controlTemperature(){

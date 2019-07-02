@@ -2,6 +2,7 @@ package com.smart_home.smart_home
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.TextView
 import android.widget.ToggleButton
 import com.google.firebase.database.DataSnapshot
@@ -15,6 +16,7 @@ class Room2Activity : AppCompatActivity() {
     private var light = roomsDatabase.child("Light")
     private var curtains = roomsDatabase.child("Curtains")
     private var temperature = roomsDatabase.child("Temperature")
+    private var humidity = roomsDatabase.child("Humidity")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +26,7 @@ class Room2Activity : AppCompatActivity() {
         controlLight()
         controlCurtains()
         controlTemperature()
+        controlHumidity()
     }
 
     private fun controlTemperature(){
@@ -32,6 +35,20 @@ class Room2Activity : AppCompatActivity() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val value = dataSnapshot.getValue(Long::class.java)
                 temp1ET.setText(value!!.toString())
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+            }
+        })
+
+    }
+
+    private fun controlHumidity(){
+        val humidity1ET = findViewById<TextView>(R.id.humidity1TB)
+        humidity.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val value = dataSnapshot.getValue(Double::class.java)
+                humidity1ET.setText(value!!.toString())
             }
 
             override fun onCancelled(error: DatabaseError) {
