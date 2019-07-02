@@ -1,6 +1,7 @@
 package com.smart_home.smart_home
 
 import android.Manifest
+import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
@@ -94,7 +95,8 @@ class MainActivity : AppCompatActivity() {
                 }} })
             .withChecked(TrackingService.isServiceRunning)
         val map = PrimaryDrawerItem().withIdentifier(3).withName("Update Home Location").withSetSelected(false)
-
+        val item3 = PrimaryDrawerItem().withIdentifier(4).withName("start").withSetSelected(false)
+        val item4 = PrimaryDrawerItem().withIdentifier(5).withName("destroy").withSetSelected(false)
         val headerResult = AccountHeaderBuilder().withActivity(this)
             .addProfiles(
                 ProfileDrawerItem().withIcon(getResources().getDrawable(R.drawable.logo)).withTextColor(Color.BLACK).withEmail(mail).withName("My Home")
@@ -120,8 +122,12 @@ class MainActivity : AppCompatActivity() {
                         val intent = Intent(activity, LoginActivity::class.java)
                         startActivity(intent)
                     }
-                    else if (position == 2){
-
+                    else if (position == 4){
+                        val intent = Intent(activity,TrackingService::class.java)
+                        startService(intent)
+                    }else if(position ==5){
+                        val intent = Intent(activity,TrackingService::class.java)
+                        stopService(intent)
                     }
                     else if(position == 3){
                         if(TrackingService.isServiceRunning){

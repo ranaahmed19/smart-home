@@ -18,6 +18,10 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.maps.android.SphericalUtil
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.location.LocationResult
+import com.google.android.gms.location.LocationCallback
+
+
 
 
 
@@ -35,6 +39,7 @@ class TrackingService : Service() {
     private var locationManager : LocationManager? = null
     private lateinit var locationCallback: LocationCallback
     private val minDistance : Double = 100.0
+   // private val timeInterval :Long  = 6000
 
     override fun onBind(intent: Intent): IBinder {
         TODO("Return the communication channel to the service.")
@@ -81,6 +86,7 @@ class TrackingService : Service() {
     }
 
     override fun onDestroy() {
+        fusedLocationClient.removeLocationUpdates(locationCallback)
         super.onDestroy()
         isServiceRunning = false
         Log.d("tracking","service destroyed")
