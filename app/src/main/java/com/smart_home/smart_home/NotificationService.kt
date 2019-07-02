@@ -8,6 +8,7 @@ import android.os.IBinder
 import android.support.annotation.Nullable
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
+import android.util.Log
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -84,7 +85,11 @@ class NotificationService : Service() {
                         var notifId = 100
                         var reqCode = 1000
                         it.children.forEach {
-                            if (it.value.toString() == "Request") {
+                            if (it.value.toString().toLowerCase() == "request") {
+
+                                intentAccept.putExtra("User", it.key.toString())
+                                intentReject.putExtra("User", it.key.toString())
+
                                 val pIntentR = PendingIntent.getBroadcast(
                                     cont,
                                     reqCode++,
@@ -98,9 +103,6 @@ class NotificationService : Service() {
                                     PendingIntent.FLAG_UPDATE_CURRENT
                                 )
 
-                                intentAccept.putExtra("User", it.key.toString())
-                                intentReject.putExtra("User", it.key.toString())
-
                                 val reqNotification = NotificationCompat.Builder(this@NotificationService, CHANNEL_ID)
                                     .setContentTitle("Request for Permission")
                                     .setContentText(it.key.toString() + " Wants to Enter")
@@ -111,9 +113,12 @@ class NotificationService : Service() {
                                     .addAction(R.drawable.clear, "Deny", pIntentR)
                                     .build()
 
+
                                 with(NotificationManagerCompat.from(this@NotificationService)) {
                                     notify(notifId++, reqNotification!!)
                                 }
+
+                                //intentAccept.removeExtra("User")
                             }
                         }
                     }
