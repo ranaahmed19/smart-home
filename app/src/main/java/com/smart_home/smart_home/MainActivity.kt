@@ -150,37 +150,13 @@ class MainActivity : AppCompatActivity() {
 
         ContextCompat.startForegroundService(this, serviceIntent)
     }
-//,myCallback: (result: String?) -> Boolean
-    private fun checkUserLocationAvailability(ID: String ) :Boolean{
-        val user = usersDatabase.child(ID)
-        val userLat = user.child("Latitude")
-        var locationFound = true
-        var v=userLat.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                if(dataSnapshot.value == null) {
-                    Log.d("snapshot","fadya")
-                  //  locationFound = myCallback.invoke("false")
 
-                }
-                //else locationFound = myCallback.invoke("true")
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Log.e("ID","error")
-            }
-        })
-        return locationFound
-    }
     private fun controlToggleButton(isChecked: Boolean, ID: String, buttonView: CompoundButton?){
         if(isChecked){
             if(ContextCompat.checkSelfPermission(this@MainActivity, Manifest.permission.ACCESS_FINE_LOCATION) ==
                 PackageManager.PERMISSION_GRANTED ){
-                if(checkUserLocationAvailability(ID)){
-                    val intent = Intent(this,TrackingService::class.java)
+                val intent = Intent(this,TrackingService::class.java)
                     startService(intent)
-                }else {Toast.makeText(this, "Update home location first", Toast.LENGTH_LONG).show()
-                    buttonView?.isChecked = false
-                }
             }else ActivityCompat.requestPermissions(this@MainActivity,arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1)
         }else {
             val intent = Intent(this,TrackingService::class.java)
@@ -199,17 +175,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-    private fun showSettingsAlert() {
-        val alertDialog = android.app.AlertDialog.Builder(this)
-        alertDialog.setTitle("GPS is not Enabled!")
-        alertDialog.setMessage("Do you want to turn on GPS?")
-        alertDialog.setPositiveButton("Yes", DialogInterface.OnClickListener { dialog, which ->
-            val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
-            this.startActivity(intent)
-        })
-        alertDialog.setNegativeButton("No",
-            DialogInterface.OnClickListener { dialog, which -> dialog.cancel() })
-        alertDialog.show()
-    }
+
 
 }

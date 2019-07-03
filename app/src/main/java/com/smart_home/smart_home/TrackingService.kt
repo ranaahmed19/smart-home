@@ -38,7 +38,7 @@ class TrackingService : Service() {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private var locationManager : LocationManager? = null
     private lateinit var locationCallback: LocationCallback
-    private val minDistance : Double = 100.0
+    private val minDistance : Double = 500.0
    // private val timeInterval :Long  = 6000
 
     override fun onBind(intent: Intent): IBinder {
@@ -80,7 +80,7 @@ class TrackingService : Service() {
         val currentFirebaseUser = FirebaseAuth.getInstance().currentUser ;
         getUserFixedLocation(currentFirebaseUser!!.uid)
         getCurrentLocation()
-        Toast.makeText(this, "Invoke background service onStartCommand method.", Toast.LENGTH_LONG).show()
+        Toast.makeText(this, "Away Mode : ON", Toast.LENGTH_LONG).show()
         isServiceRunning = true
         return START_STICKY
     }
@@ -90,7 +90,7 @@ class TrackingService : Service() {
         super.onDestroy()
         isServiceRunning = false
         Log.d("tracking","service destroyed")
-        Toast.makeText(this, "Invoke background service onDestroy method.", Toast.LENGTH_LONG).show()
+        Toast.makeText(this, "Away mode : OFF", Toast.LENGTH_LONG).show()
     }
 
     fun distanceBetween(point1: LatLng?, point2: LatLng?): Double? {
@@ -102,7 +102,7 @@ class TrackingService : Service() {
 
     private fun getCurrentLocation(){
         val locationRequest = LocationRequest.create()?.apply {
-            interval = 6000
+            interval = 60000
             fastestInterval = 5000
             priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         }
@@ -110,6 +110,7 @@ class TrackingService : Service() {
             PackageManager.PERMISSION_GRANTED &&locationManager!!.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             val locationResult = fusedLocationClient.requestLocationUpdates(locationRequest,locationCallback,
                 null)
+
 
         }else {
             Log.e("getCL","permission denied")
@@ -128,7 +129,7 @@ class TrackingService : Service() {
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 lat = dataSnapshot.value as (Double)
-                Log.d("latlong",lat.toString())
+
             }
             override fun onCancelled(error: DatabaseError) {
                Log.e("ID","error")
@@ -137,7 +138,7 @@ class TrackingService : Service() {
         userLong.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 long = dataSnapshot.value as (Double)
-                Log.d("latlong",long.toString())
+
             }
             override fun onCancelled(error: DatabaseError) {
                 Log.e("ID2","error")
